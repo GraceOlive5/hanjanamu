@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한자 급수 퀴즈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background: linear-gradient(135deg, #9b87f5 0%, #ffa07a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #9b87f5;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* 네비게이션 */
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-btn.active {
+            color: #9b87f5;
+            border-bottom-color: #9b87f5;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: #fef5ff;
+        }
+
+        /* 페이지 */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* 인트로 */
+        #intro h2 {
+            color: #333;
+            margin: 30px 0 20px 0;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .level-btn {
+            background: linear-gradient(135deg, #9b87f5, #ffa07a);
+            color: white;
+            border: none;
+            padding: 25px 15px;
+            border-radius: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .level-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(155, 135, 245, 0.4);
+        }
+
+        .level-btn.locked {
+            background: linear-gradient(135deg, #999, #666);
+            cursor: pointer;
+        }
+
+        .level-btn .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .level-btn.locked .badge {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .level-btn .count {
+            display: block;
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* Paywall */
+        .paywall {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .paywall.show {
+            display: flex;
+        }
+
+        .paywall-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .paywall-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .paywall h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 26px;
+        }
+
+        .paywall p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .paywall-features {
+            text-align: left;
+            margin: 25px 0;
+            background: #fef5ff;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .paywall-feature {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .paywall-feature::before {
+            content: '✨';
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .paywall-prices {
+            margin: 25px 0;
+        }
+
+        .price-option {
+            background: linear-gradient(135deg, #9b87f5, #ffa07a);
+            color: white;
+            padding: 18px;
+            border-radius: 15px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .price-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(155, 135, 245, 0.4);
+        }
+
+        .price-option .price {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .price-option .period {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .price-option .savings {
+            background: #ffd700;
+            color: #333;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .paywall-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .close-paywall {
+            background: #ddd;
+            color: #666;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .restore-btn {
+            background: none;
+            border: none;
+            color: #9b87f5;
+            padding: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .master-code-btn {
+            background: none;
+            border: none;
+            color: #999;
+            padding: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+        .code-input-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .code-input-modal.show {
+            display: flex;
+        }
+
+        .code-input-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .code-input-content h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .code-input-content input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .code-input-content input:focus {
+            outline: none;
+            border-color: #9b87f5;
+        }
+
+        .code-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-buttons button {
+            flex: 1;
+        }
+
+        .cancel-btn {
+            background: #ddd;
+            color: #666;
+        }
+
+        /* 퀴즈 */
+        #quiz {
+            display: none;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: #ddd;
+            color: #666;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #ccc;
+        }
+
+        .progress {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #9b87f5, #ffa07a);
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            background: #fef5ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            min-height: 100px;
+        }
+
+        .question-text {
+            font-size: 22px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            min-height: 180px;
+        }
+
+        .choice {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .choice:hover:not(.disabled) {
+            transform: translateY(-3px);
+            border-color: #9b87f5;
+            box-shadow: 0 5px 15px rgba(155, 135, 245, 0.3);
+        }
+
+        .choice.selected {
+            border-color: #9b87f5;
+            background: #fef5ff;
+        }
+
+        .choice.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .choice.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .choice.disabled {
+            pointer-events: none;
+        }
+
+        .hanja {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .hanja-info {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            min-height: 20px;
+            visibility: hidden;
+        }
+
+        .choice.show-info .hanja-info {
+            visibility: visible;
+        }
+
+        .word-examples {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fef5ff;
+            border-radius: 10px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .word-example {
+            margin: 5px 0;
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+        }
+
+        .feedback.show {
+            visibility: visible;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            min-height: 50px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #9b87f5, #ffa07a);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 135, 245, 0.4);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.hidden {
+            visibility: hidden;
+        }
+
+        /* 결과 */
+        .result {
+            text-align: center;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h2 {
+            color: #9b87f5;
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .result p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review-btn {
+            background: linear-gradient(135deg, #f44336, #e91e63);
+        }
+
+        /* 마이페이지 */
+        .stats-card {
+            background: linear-gradient(135deg, #9b87f5, #ffa07a);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stats-card h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .level-display {
+            font-size: 42px;
+            font-weight: bold;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .score-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 32px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .score-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wrong-words-list {
+            background: #fef5ff;
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .wrong-word-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .wrong-word-char {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .wrong-word-info {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .wrong-word-meaning {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .wrong-count-badge {
+            background: #f44336;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .link-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .link-card:hover {
+            border-color: #9b87f5;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(155, 135, 245, 0.2);
+        }
+
+        .link-icon {
+            font-size: 32px;
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .link-desc {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .link-arrow {
+            font-size: 24px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 한자 급수 퀴즈</h1>
+        
+        <!-- 네비게이션 -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="showPage('home')">🏠 홈</button>
+            <button class="nav-btn" onclick="showPage('mypage')">👤 마이페이지</button>
+        </div>
+
+        <!-- 홈 페이지 -->
+        <div id="home" class="page active">
+            <div id="intro">
+                <h2>수련할 급수를 선택하세요</h2>
+                
+                <!-- 개발자 상태 표시 -->
+                <div style="text-align: center; margin-bottom: 15px; padding: 10px; background: #fef5ff; border-radius: 10px; font-size: 13px;" id="devStatus">
+                    <span id="premiumStatus">
+                        🔒 무료 사용자 | <a href="#" onclick="showMasterCodeInput(); return false;" style="color: #9b87f5; text-decoration: underline;">마스터 코드 입력</a>
+                    </span>
+                </div>
+                
+                <div class="level-grid">
+                    <button class="level-btn locked" onclick="showPaywall(1)">
+                        🔒 1급
+                        <span class="badge">PRO</span>
+                        <span class="count">3,500자 누적</span>
+                    </button>
+                    <button class="level-btn locked" onclick="showPaywall(2)">
+                        🔒 2급
+                        <span class="badge">PRO</span>
+                        <span class="count">2,355자 누적</span>
+                    </button>
+                    <button class="level-btn locked" onclick="showPaywall(3)">
+                        🔒 3급
+                        <span class="badge">PRO</span>
+                        <span class="count">1,817자 누적</span>
+                    </button>
+                    <button class="level-btn locked" onclick="showPaywall(4)">
+                        🔒 4급
+                        <span class="badge">PRO</span>
+                        <span class="count">1,000자 누적</span>
+                    </button>
+                    <button class="level-btn locked" onclick="showPaywall(5)">
+                        🔒 5급
+                        <span class="badge">PRO</span>
+                        <span class="count">500자 누적</span>
+                    </button>
+                    <button class="level-btn locked" onclick="showPaywall(6)">
+                        🔒 6급
+                        <span class="badge">PRO</span>
+                        <span class="count">300자 누적</span>
+                    </button>
+                    <button class="level-btn" onclick="startQuiz(7)">
+                        7급
+                        <span class="badge">무료</span>
+                        <span class="count">150자 누적</span>
+                    </button>
+                    <button class="level-btn" onclick="startQuiz(8)">
+                        8급
+                        <span class="badge">무료</span>
+                        <span class="count">50자</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 퀴즈 화면 -->
+            <div id="quiz">
+                <div class="header">
+                    <button class="back-btn" onclick="backToIntro()">← 돌아가기</button>
+                    <div class="score">
+                        점수: <span id="score">0</span> / <span id="total">0</span>
+                    </div>
+                </div>
+                
+                <div class="progress">
+                    <div class="progress-bar" id="progress"></div>
+                </div>
+
+                <div class="feedback" id="feedback"></div>
+
+                <div class="question">
+                    <div class="question-text" id="questionText"></div>
+                </div>
+
+                <div class="choices" id="choices"></div>
+
+                <div class="buttons">
+                    <button id="checkBtn" onclick="checkAnswer()">정답 확인</button>
+                    <button id="nextBtn" onclick="nextQuestion()" class="hidden">다음 문제</button>
+                </div>
+            </div>
+
+            <!-- 결과 화면 -->
+            <div class="result" id="result">
+                <div class="emoji" id="resultEmoji"></div>
+                <h2>퀴즈 완료!</h2>
+                <p>최종 점수: <span id="finalScore"></span></p>
+                <p style="color: #f44336; font-size: 18px;" id="wrongCount"></p>
+                <div class="result-buttons">
+                    <button id="reviewBtn" class="review-btn" onclick="startReview()">📚 틀린 한자 복습하기</button>
+                    <button onclick="backToIntro()">🏠 처음으로</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 마이페이지 -->
+        <div id="mypage" class="page">
+            <div class="stats-card">
+                <h2>나의 레벨</h2>
+                <div class="level-display" id="userLevel">🥉 Bronze</div>
+                <div style="font-size: 13px; opacity: 0.9; margin-bottom: 15px;">
+                    <div>🥉 Bronze (0점) → 🥈 Silver (50점) → 🥇 Gold (200점)</div>
+                    <div>🏆 Platinum (500점) → 💎 Diamond (1,000점)</div>
+                </div>
+                <div class="score-info">
+                    <div class="score-item">
+                        <span class="score-value" id="totalQuizzes">0</span>
+                        <div class="score-label">총 퀴즈</div>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-value" id="correctRate">0%</span>
+                        <div class="score-label">정답률</div>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-value" id="totalScore">0</span>
+                        <div class="score-label">총 점수</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>
+                    <span>❌</span>
+                    자주 틀린 한자 Top 30
+                </h3>
+                <div class="wrong-words-list" id="wrongWordsList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📚</div>
+                        <div>아직 틀린 한자가 없어요!</div>
+                        <div style="font-size: 14px; margin-top: 10px;">퀴즈를 시작해보세요</div>
+                    </div>
+                </div>
+                <button onclick="reviewTop30()" style="width: 100%; margin-top: 15px;" id="top30ReviewBtn" disabled>
+                    Top 30 한자 복습하기
+                </button>
+            </div>
+
+            <div class="section">
+                <h3>
+                    <span>🔗</span>
+                    유용한 링크
+                </h3>
+                <a href="https://www.hanja.re.kr/" target="_blank" class="link-card">
+                    <div class="link-icon">📝</div>
+                    <div class="link-content">
+                        <div class="link-title">한국어문회 한자능력검정시험</div>
+                        <div class="link-desc">시험 일정 및 접수</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="https://www.hanja.ne.kr/" target="_blank" class="link-card">
+                    <div class="link-icon">🏆</div>
+                    <div class="link-content">
+                        <div class="link-title">대한검정회 한자시험</div>
+                        <div class="link-desc">시험 정보 및 기출문제</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paywall -->
+    <div class="paywall" id="paywall">
+        <div class="paywall-content">
+            <div class="paywall-icon">🔒</div>
+            <h2>프리미엄으로 업그레이드</h2>
+            <p>모든 급수를 학습하고 더 많은 한자를 마스터하세요!</p>
+            
+            <div class="paywall-features">
+                <div class="paywall-feature">6급부터 1급까지 모든 한자 (3,200자 추가)</div>
+                <div class="paywall-feature">프리미엄 학습 통계</div>
+                <div class="paywall-feature">고급 복습 기능</div>
+                <div class="paywall-feature">광고 없는 학습 환경</div>
+            </div>
+
+            <div class="paywall-prices">
+                <div class="price-option" onclick="subscribe('monthly')">
+                    <div class="price">₩3,900</div>
+                    <div class="period">월 구독</div>
+                </div>
+                <div class="price-option" onclick="subscribe('yearly')">
+                    <div class="price">₩39,000</div>
+                    <div class="period">연 구독</div>
+                    <div class="savings">17% 할인!</div>
+                </div>
+            </div>
+
+            <div class="paywall-buttons">
+                <button class="close-paywall" onclick="closePaywall()">나중에 하기</button>
+                <button class="restore-btn" onclick="restorePurchases()">구매 복원</button>
+                <button class="master-code-btn" onclick="showMasterCodeInput()">🔑 마스터 코드</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 마스터 코드 입력 모달 -->
+    <div class="code-input-modal" id="codeInputModal">
+        <div class="code-input-content">
+            <h3>🔑 마스터 코드 입력</h3>
+            <input 
+                type="text" 
+                id="masterCodeInput" 
+                placeholder="코드 입력"
+                maxlength="12"
+                onkeypress="if(event.key==='Enter') checkMasterCode()"
+            >
+            <div class="code-buttons">
+                <button class="cancel-btn" onclick="closeMasterCodeInput()">취소</button>
+                <button onclick="checkMasterCode()">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 한자 데이터 (8급 50자, 7급 100자 - 실제 배정한자로 교체 가능)
+        const hanjaData = {
+            8: [
+                // 8급 50자 (기본 한자)
+                { char: '一', sound: '일', meaning: '한', words: ['일치(一致)', '일등(一等)'] },
+                { char: '二', sound: '이', meaning: '두', words: ['이중(二重)', '이심(二心)'] },
+                { char: '三', sound: '삼', meaning: '석', words: ['삼국(三國)', '삼각(三角)'] },
+                { char: '四', sound: '사', meaning: '넉', words: ['사방(四方)', '사계(四季)'] },
+                { char: '五', sound: '오', meaning: '다섯', words: ['오감(五感)', '오행(五行)'] },
+                { char: '六', sound: '육', meaning: '여섯', words: ['육감(六感)', '육체(六體)'] },
+                { char: '七', sound: '칠', meaning: '일곱', words: ['칠일(七日)', '칠색(七色)'] },
+                { char: '八', sound: '팔', meaning: '여덟', words: ['팔방(八方)', '팔도(八道)'] },
+                { char: '九', sound: '구', meaning: '아홉', words: ['구월(九月)', '구름(九-)'] },
+                { char: '十', sound: '십', meaning: '열', words: ['십일(十一)', '십분(十分)'] },
+                { char: '百', sound: '백', meaning: '일백', words: ['백성(百姓)', '백년(百年)'] },
+                { char: '千', sound: '천', meaning: '일천', words: ['천년(千年)', '천지(千地)'] },
+                { char: '萬', sound: '만', meaning: '일만', words: ['만세(萬歲)', '만물(萬物)'] },
+                { char: '上', sound: '상', meaning: '위', words: ['상하(上下)', '상승(上昇)'] },
+                { char: '下', sound: '하', meaning: '아래', words: ['하강(下降)', '하품(下品)'] },
+                { char: '中', sound: '중', meaning: '가운데', words: ['중간(中間)', '중심(中心)'] },
+                { char: '大', sound: '대', meaning: '큰', words: ['대한(大韓)', '대학(大學)'] },
+                { char: '小', sound: '소', meaning: '작을', words: ['소학(小學)', '소인(小人)'] },
+                { char: '人', sound: '인', meaning: '사람', words: ['인간(人間)', '인생(人生)'] },
+                { char: '日', sound: '일', meaning: '날', words: ['일요(日曜)', '일출(日出)'] },
+                { char: '月', sound: '월', meaning: '달', words: ['월요(月曜)', '월광(月光)'] },
+                { char: '火', sound: '화', meaning: '불', words: ['화요(火曜)', '화재(火災)'] },
+                { char: '水', sound: '수', meaning: '물', words: ['수요(水曜)', '수도(水道)'] },
+                { char: '木', sound: '목', meaning: '나무', words: ['목요(木曜)', '목재(木材)'] },
+                { char: '金', sound: '금', meaning: '쇠', words: ['금요(金曜)', '금속(金屬)'] },
+                { char: '土', sound: '토', meaning: '흙', words: ['토요(土曜)', '토지(土地)'] },
+                { char: '山', sound: '산', meaning: '뫼', words: ['산림(山林)', '산천(山川)'] },
+                { char: '川', sound: '천', meaning: '내', words: ['천지(川地)', '하천(河川)'] },
+                { char: '男', sound: '남', meaning: '사내', words: ['남자(男子)', '남성(男性)'] },
+                { char: '女', sound: '녀', meaning: '여자', words: ['여자(女子)', '여성(女性)'] },
+                { char: '子', sound: '자', meaning: '아들', words: ['자녀(子女)', '자식(子息)'] },
+                { char: '文', sound: '문', meaning: '글월', words: ['문자(文字)', '문학(文學)'] },
+                { char: '字', sound: '자', meaning: '글자', words: ['한자(漢字)', '문자(文字)'] },
+                { char: '天', sound: '천', meaning: '하늘', words: ['천국(天國)', '천지(天地)'] },
+                { char: '地', sound: '지', meaning: '땅', words: ['지구(地球)', '토지(土地)'] },
+                { char: '白', sound: '백', meaning: '흰', words: ['백색(白色)', '백지(白紙)'] },
+                { char: '先', sound: '선', meaning: '먼저', words: ['선생(先生)', '선조(先祖)'] },
+                { char: '生', sound: '생', meaning: '날', words: ['생일(生日)', '학생(學生)'] },
+                { char: '王', sound: '왕', meaning: '임금', words: ['왕국(王國)', '왕자(王子)'] },
+                { char: '玉', sound: '옥', meaning: '구슬', words: ['옥석(玉石)', '보옥(寶玉)'] },
+                { char: '犬', sound: '견', meaning: '개', words: ['애견(愛犬)', '명견(名犬)'] },
+                { char: '竹', sound: '죽', meaning: '대나무', words: ['죽순(竹筍)', '대죽(大竹)'] },
+                { char: '米', sound: '미', meaning: '쌀', words: ['미곡(米穀)', '백미(白米)'] },
+                { char: '糸', sound: '사', meaning: '실', words: ['사선(絲線)', '실사(實絲)'] },
+                { char: '貝', sound: '패', meaning: '조개', words: ['패류(貝類)', '조개(貝)'] },
+                { char: '車', sound: '차', meaning: '수레', words: ['차량(車輛)', '자동차(自動車)'] },
+                { char: '足', sound: '족', meaning: '발', words: ['족구(足球)', '만족(滿足)'] },
+                { char: '雨', sound: '우', meaning: '비', words: ['우산(雨傘)', '우천(雨天)'] },
+                { char: '草', sound: '초', meaning: '풀', words: ['초원(草原)', '잡초(雜草)'] },
+                { char: '門', sound: '문', meaning: '문', words: ['문호(門戶)', '대문(大門)'] }
+            ],
+            7: [
+                // 7급 100자 (8급 포함 + 신규 100자, 샘플 데이터)
+                { char: '右', sound: '우', meaning: '오른', words: ['좌우(左右)', '우측(右側)'] },
+                { char: '左', sound: '좌', meaning: '왼', words: ['좌우(左右)', '좌측(左側)'] },
+                { char: '名', sound: '명', meaning: '이름', words: ['성명(姓名)', '유명(有名)'] },
+                { char: '石', sound: '석', meaning: '돌', words: ['석유(石油)', '화석(化石)'] },
+                { char: '林', sound: '림', meaning: '수풀', words: ['산림(山林)', '삼림(森林)'] },
+                { char: '休', sound: '휴', meaning: '쉴', words: ['휴식(休息)', '휴일(休日)'] },
+                { char: '見', sound: '견', meaning: '볼', words: ['의견(意見)', '발견(發見)'] },
+                { char: '力', sound: '력', meaning: '힘', words: ['노력(努力)', '능력(能力)'] },
+                { char: '言', sound: '언', meaning: '말씀', words: ['언어(言語)', '발언(發言)'] },
+                { char: '立', sound: '립', meaning: '설', words: ['독립(獨立)', '성립(成立)'] },
+                { char: '花', sound: '화', meaning: '꽃', words: ['국화(菊花)', '꽃(花)'] },
+                { char: '田', sound: '전', meaning: '밭', words: ['논밭(田)', '유전(油田)'] },
+                { char: '村', sound: '촌', meaning: '마을', words: ['농촌(農村)', '어촌(漁村)'] },
+                { char: '正', sound: '정', meaning: '바를', words: ['정확(正確)', '정답(正答)'] },
+                { char: '本', sound: '본', meaning: '근본', words: ['본래(本來)', '기본(基本)'] },
+                { char: '母', sound: '모', meaning: '어미', words: ['모자(母子)', '부모(父母)'] },
+                { char: '父', sound: '부', meaning: '아비', words: ['부자(父子)', '부모(父母)'] },
+                { char: '北', sound: '북', meaning: '북녘', words: ['북쪽(北-)', '남북(南北)'] },
+                { char: '外', sound: '외', meaning: '바깥', words: ['외출(外出)', '해외(海外)'] },
+                { char: '兄', sound: '형', meaning: '맏', words: ['형제(兄弟)', '백형(伯兄)'] },
+                { char: '弟', sound: '제', meaning: '아우', words: ['제자(弟子)', '형제(兄弟)'] },
+                { char: '長', sound: '장', meaning: '긴', words: ['장점(長點)', '성장(成長)'] },
+                { char: '年', sound: '년', meaning: '해', words: ['년도(年度)', '소년(少年)'] },
+                { char: '手', sound: '수', meaning: '손', words: ['수화(手話)', '수단(手段)'] },
+                { char: '耳', sound: '이', meaning: '귀', words: ['귀(耳)', '이목(耳目)'] },
+                { char: '目', sound: '목', meaning: '눈', words: ['목적(目的)', '주목(注目)'] },
+                { char: '口', sound: '구', meaning: '입', words: ['구강(口腔)', '입구(入口)'] },
+                { char: '牛', sound: '우', meaning: '소', words: ['소(牛)', '우유(牛乳)'] },
+                { char: '馬', sound: '마', meaning: '말', words: ['말(馬)', '경마(競馬)'] },
+                { char: '鳥', sound: '조', meaning: '새', words: ['조류(鳥類)', '비조(飛鳥)'] },
+                { char: '魚', sound: '어', meaning: '물고기', words: ['어류(魚類)', '금어(金魚)'] },
+                { char: '羊', sound: '양', meaning: '양', words: ['양(羊)', '면양(綿羊)'] },
+                { char: '赤', sound: '적', meaning: '붉을', words: ['적색(赤色)', '면적(面積)'] },
+                { char: '靑', sound: '청', meaning: '푸를', words: ['청색(靑色)', '청년(靑年)'] },
+                { char: '黃', sound: '황', meaning: '누를', words: ['황색(黃色)', '황금(黃金)'] },
+                { char: '黑', sound: '흑', meaning: '검을', words: ['흑색(黑色)', '흑백(黑白)'] },
+                { char: '春', sound: '춘', meaning: '봄', words: ['춘계(春季)', '청춘(靑春)'] },
+                { char: '夏', sound: '하', meaning: '여름', words: ['하계(夏季)', '여름(夏)'] },
+                { char: '秋', sound: '추', meaning: '가을', words: ['추석(秋夕)', '가을(秋)'] },
+                { char: '冬', sound: '동', meaning: '겨울', words: ['동계(冬季)', '겨울(冬)'] },
+                { char: '東', sound: '동', meaning: '동녘', words: ['동쪽(東-)', '동서(東西)'] },
+                { char: '西', sound: '서', meaning: '서녘', words: ['서쪽(西-)', '동서(東西)'] },
+                { char: '南', sound: '남', meaning: '남녘', words: ['남쪽(南-)', '남북(南北)'] },
+                { char: '心', sound: '심', meaning: '마음', words: ['마음(心)', '중심(中心)'] },
+                { char: '少', sound: '소', meaning: '적을', words: ['소년(少年)', '적소(適少)'] },
+                { char: '半', sound: '반', meaning: '반', words: ['반(半)', '반반(半半)'] },
+                { char: '內', sound: '내', meaning: '안', words: ['내부(內部)', '국내(國內)'] },
+                { char: '出', sound: '출', meaning: '날', words: ['출발(出發)', '외출(外出)'] },
+                { char: '入', sound: '입', meaning: '들', words: ['입학(入學)', '수입(收入)'] },
+                { char: '分', sound: '분', meaning: '나눌', words: ['분리(分離)', '구분(區分)'] },
+                { char: '校', sound: '교', meaning: '학교', words: ['학교(學校)', '교실(校室)'] },
+                { char: '敎', sound: '교', meaning: '가르칠', words: ['교육(敎育)', '교사(敎師)'] },
+                { char: '室', sound: '실', meaning: '집', words: ['교실(敎室)', '실내(室內)'] },
+                { char: '國', sound: '국', meaning: '나라', words: ['국가(國家)', '대한민국(大韓民國)'] },
+                { char: '家', sound: '가', meaning: '집', words: ['가정(家庭)', '가족(家族)'] },
+                { char: '書', sound: '서', meaning: '글', words: ['서적(書籍)', '독서(讀書)'] },
+                { char: '道', sound: '도', meaning: '길', words: ['도로(道路)', '철도(鐵道)'] },
+                { char: '世', sound: '세', meaning: '세상', words: ['세계(世界)', '세상(世上)'] },
+                { char: '代', sound: '대', meaning: '대신할', words: ['세대(世代)', '시대(時代)'] },
+                { char: '自', sound: '자', meaning: '스스로', words: ['자신(自身)', '자유(自由)'] },
+                { char: '然', sound: '연', meaning: '그러할', words: ['자연(自然)', '천연(天然)'] },
+                { char: '體', sound: '체', meaning: '몸', words: ['신체(身體)', '물체(物體)'] },
+                { char: '市', sound: '시', meaning: '저자', words: ['시장(市場)', '도시(都市)'] },
+                { char: '區', sound: '구', meaning: '구역', words: ['구역(區域)', '지구(地區)'] },
+                { char: '民', sound: '민', meaning: '백성', words: ['국민(國民)', '민족(民族)'] },
+                { char: '主', sound: '주', meaning: '주인', words: ['주인(主人)', '민주(民主)'] },
+                { char: '發', sound: '발', meaning: '필', words: ['발전(發展)', '출발(出發)'] },
+                { char: '思', sound: '사', meaning: '생각', words: ['사고(思考)', '사상(思想)'] },
+                { char: '意', sound: '의', meaning: '뜻', words: ['의미(意味)', '의견(意見)'] },
+                { char: '知', sound: '지', meaning: '알', words: ['지식(知識)', '인지(認知)'] },
+                { char: '開', sound: '개', meaning: '열', words: ['개방(開放)', '공개(公開)'] },
+                { char: '閉', sound: '폐', meaning: '닫을', words: ['폐쇄(閉鎖)', '개폐(開閉)'] },
+                { char: '問', sound: '문', meaning: '물을', words: ['질문(質問)', '문제(問題)'] },
+                { char: '答', sound: '답', meaning: '대답', words: ['대답(答)', '응답(應答)'] },
+                { char: '記', sound: '기', meaning: '기록할', words: ['기록(記錄)', '일기(日記)'] },
+                { char: '讀', sound: '독', meaning: '읽을', words: ['독서(讀書)', '낭독(朗讀)'] },
+                { char: '同', sound: '동', meaning: '한가지', words: ['동일(同一)', '공동(共同)'] },
+                { char: '友', sound: '우', meaning: '벗', words: ['친구(親舊)', '우정(友情)'] },
+                { char: '姉', sound: '자', meaning: '손위누이', words: ['자매(姉妹)', '언니(姉)'] },
+                { char: '妹', sound: '매', meaning: '손아래누이', words: ['자매(姉妹)', '여동생(妹)'] },
+                { char: '親', sound: '친', meaning: '친할', words: ['부모(父母)', '친구(親舊)'] },
+                { char: '愛', sound: '애', meaning: '사랑', words: ['사랑(愛)', '애정(愛情)'] },
+                { char: '理', sound: '리', meaning: '다스릴', words: ['이치(理)', '관리(管理)'] },
+                { char: '科', sound: '과', meaning: '과목', words: ['과학(科學)', '학과(學科)'] },
+                { char: '社', sound: '사', meaning: '모일', words: ['회사(會社)', '사회(社會)'] },
+                { char: '會', sound: '회', meaning: '모일', words: ['회의(會議)', '사회(社會)'] },
+                { char: '事', sound: '사', meaning: '일', words: ['일(事)', '사건(事件)'] },
+                { char: '物', sound: '물', meaning: '만물', words: ['물건(物件)', '동물(動物)'] },
+                { char: '音', sound: '음', meaning: '소리', words: ['소리(音)', '발음(發音)'] },
+                { char: '樂', sound: '악', meaning: '풍류', words: ['음악(音樂)', '즐거움(樂)'] },
+                { char: '美', sound: '미', meaning: '아름다울', words: ['미술(美術)', '아름다움(美)'] },
+                { char: '術', sound: '술', meaning: '재주', words: ['기술(技術)', '예술(藝術)'] },
+                { char: '數', sound: '수', meaning: '셀', words: ['수학(數學)', '숫자(數字)'] },
+                { char: '多', sound: '다', meaning: '많을', words: ['다수(多數)', '많음(多)'] },
+                { char: '各', sound: '각', meaning: '각각', words: ['각자(各自)', '각각(各各)'] },
+                { char: '學', sound: '학', meaning: '배울', words: ['학교(學校)', '학생(學生)'] },
+                { char: '韓', sound: '한', meaning: '나라', words: ['대한민국(大韓民國)', '한국(韓國)'] }
+            ]
+        };
+
+        // 게임 상태
+        let currentLevel = 8;
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedChoice = null;
+        let questions = [];
+        let currentHanjaData = [];
+        let wrongAnswers = [];
+        let isReviewMode = false;
+        let isPremium = false; // 구독 상태 (나중에 StoreKit 연동)
+
+        // LocalStorage 키
+        const STORAGE_KEYS = {
+            STATS: 'hanjaQuizStats',
+            PREMIUM: 'hanjaQuizPremium'
+        };
+
+        // 통계 데이터
+        let stats = {
+            totalQuizzes: 0,
+            totalCorrect: 0,
+            totalQuestions: 0,
+            level: '🥉 Bronze',
+            wrongWords: {}
+        };
+
+        // 프리미엄 상태 UI 업데이트
+        function updatePremiumStatusUI() {
+            const statusEl = document.getElementById('premiumStatus');
+            if (isPremium) {
+                statusEl.innerHTML = '💎 프리미엄 활성화 | <a href="#" onclick="resetPremium(); return false;" style="color: #999; text-decoration: underline;">초기화</a>';
+            } else {
+                statusEl.innerHTML = '🔒 무료 사용자 | <a href="#" onclick="showMasterCodeInput(); return false;" style="color: #9b87f5; text-decoration: underline;">마스터 코드 입력</a>';
+            }
+        }
+
+        // 프리미엄 초기화 (테스트용)
+        function resetPremium() {
+            if (confirm('프리미엄 상태를 초기화하시겠습니까?')) {
+                isPremium = false;
+                localStorage.removeItem(STORAGE_KEYS.PREMIUM);
+                updatePremiumStatusUI();
+                alert('프리미엄 상태가 초기화되었습니다.');
+            }
+        }
+
+        // 초기화
+        function init() {
+            loadStats();
+            loadPremiumStatus();
+            updateMyPage();
+            updatePremiumStatusUI();
+        }
+
+        // 프리미엄 상태 로드
+        function loadPremiumStatus() {
+            const saved = localStorage.getItem(STORAGE_KEYS.PREMIUM);
+            isPremium = saved === 'true';
+        }
+
+        // 통계 로드
+        function loadStats() {
+            const saved = localStorage.getItem(STORAGE_KEYS.STATS);
+            if (saved) {
+                stats = JSON.parse(saved);
+            }
+        }
+
+        // 통계 저장
+        function saveStats() {
+            localStorage.setItem(STORAGE_KEYS.STATS, JSON.stringify(stats));
+        }
+
+        // 페이지 전환
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(pageName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (pageName === 'mypage') {
+                updateMyPage();
+            }
+        }
+
+        // Paywall 표시
+        function showPaywall(level) {
+            if (isPremium) {
+                // 프리미엄 사용자는 바로 퀴즈 시작
+                startQuiz(level);
+                return;
+            }
+            document.getElementById('paywall').classList.add('show');
+        }
+
+        // Paywall 닫기
+        function closePaywall() {
+            document.getElementById('paywall').classList.remove('show');
+        }
+
+        // 마스터 코드 (개발/테스트용)
+        const MASTER_CODES = [
+            'HANJA2025',      // 기본 마스터 코드
+            'PREMIUM',        // 간단 코드
+            'TESTMODE',       // 테스트 모드
+            'GRACE',          // 개발자 코드
+            'DIAMOND'         // 다이아몬드 코드
+        ];
+
+        // 마스터 코드 입력창 표시
+        function showMasterCodeInput() {
+            document.getElementById('codeInputModal').classList.add('show');
+            document.getElementById('masterCodeInput').value = '';
+            document.getElementById('masterCodeInput').focus();
+        }
+
+        // 마스터 코드 입력창 닫기
+        function closeMasterCodeInput() {
+            document.getElementById('codeInputModal').classList.remove('show');
+        }
+
+        // 마스터 코드 확인
+        function checkMasterCode() {
+            const input = document.getElementById('masterCodeInput').value.toUpperCase().trim();
+            
+            if (MASTER_CODES.includes(input)) {
+                isPremium = true;
+                localStorage.setItem(STORAGE_KEYS.PREMIUM, 'true');
+                closeMasterCodeInput();
+                closePaywall();
+                updatePremiumStatusUI();
+                
+                alert('✅ 마스터 코드 인증 완료!\n모든 급수를 사용할 수 있습니다.\n\n사용된 코드: ' + input);
+            } else {
+                alert('❌ 잘못된 코드입니다.\n다시 시도해주세요.\n\n유효한 코드:\n- HANJA2025\n- PREMIUM\n- TESTMODE\n- GRACE\n- DIAMOND');
+                document.getElementById('masterCodeInput').value = '';
+                document.getElementById('masterCodeInput').focus();
+            }
+        }
+
+        // 구독하기 (시뮬레이션)
+        function subscribe(type) {
+            alert(`${type === 'monthly' ? '월' : '연'} 구독이 완료되었습니다! (시뮬레이션)\n실제 앱에서는 App Store 결제가 진행됩니다.`);
+            isPremium = true;
+            localStorage.setItem(STORAGE_KEYS.PREMIUM, 'true');
+            closePaywall();
+        }
+
+        // 구매 복원
+        function restorePurchases() {
+            alert('구매 복원 기능 (시뮬레이션)\n실제 앱에서는 App Store Receipt를 확인합니다.');
+        }
+
+        // 레벨 계산 - 별자리 등급
+        function calculateLevel() {
+            const totalScore = stats.totalCorrect;
+            if (totalScore >= 1000) return '💎 Diamond';
+            if (totalScore >= 500) return '🏆 Platinum';
+            if (totalScore >= 200) return '🥇 Gold';
+            if (totalScore >= 50) return '🥈 Silver';
+            return '🥉 Bronze';
+        }
+
+        // 정답률 계산
+        function calculateCorrectRate() {
+            if (stats.totalQuestions === 0) return 0;
+            return Math.round((stats.totalCorrect / stats.totalQuestions) * 100);
+        }
+
+        // 마이페이지 업데이트
+        function updateMyPage() {
+            stats.level = calculateLevel();
+            
+            document.getElementById('userLevel').textContent = stats.level;
+            document.getElementById('totalQuizzes').textContent = stats.totalQuizzes;
+            document.getElementById('correctRate').textContent = calculateCorrectRate() + '%';
+            document.getElementById('totalScore').textContent = stats.totalCorrect;
+            
+            updateWrongWordsList();
+        }
+
+        // 틀린 단어 목록 업데이트
+        function updateWrongWordsList() {
+            const container = document.getElementById('wrongWordsList');
+            const reviewBtn = document.getElementById('top30ReviewBtn');
+            
+            const sortedWords = Object.entries(stats.wrongWords)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 30);
+            
+            if (sortedWords.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📚</div>
+                        <div>아직 틀린 한자가 없어요!</div>
+                        <div style="font-size: 14px; margin-top: 10px;">퀴즈를 시작해보세요</div>
+                    </div>
+                `;
+                reviewBtn.disabled = true;
+            } else {
+                container.innerHTML = sortedWords.map(([char, data]) => `
+                    <div class="wrong-word-item">
+                        <div class="wrong-word-char">${char}</div>
+                        <div class="wrong-word-info">
+                            <div class="wrong-word-meaning">${data.meaning} ${data.sound}</div>
+                        </div>
+                        <div class="wrong-count-badge">${data.count}번</div>
+                    </div>
+                `).join('');
+                reviewBtn.disabled = false;
+            }
+        }
+
+        // Top 30 복습
+        function reviewTop30() {
+            const sortedWords = Object.entries(stats.wrongWords)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 30);
+            
+            if (sortedWords.length === 0) return;
+            
+            questions = sortedWords.map(([char, data]) => ({
+                char: char,
+                sound: data.sound,
+                meaning: data.meaning
+            })).sort(() => Math.random() - 0.5);
+            
+            currentHanjaData = [];
+            for (let level in hanjaData) {
+                currentHanjaData = currentHanjaData.concat(hanjaData[level]);
+            }
+            
+            isReviewMode = true;
+            wrongAnswers = [];
+            currentQuestion = 0;
+            score = 0;
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('home').classList.add('active');
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('result').classList.remove('show');
+            
+            document.querySelector('h1').textContent = '🎓 Top 30 복습';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // 퀴즈 시작
+        function startQuiz(level) {
+            currentLevel = level;
+            isReviewMode = false;
+            wrongAnswers = [];
+            currentHanjaData = hanjaData[level];
+            
+            questions = [...currentHanjaData].sort(() => Math.random() - 0.5);
+            currentQuestion = 0;
+            score = 0;
+            
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('result').classList.remove('show');
+            
+            document.querySelector('h1').textContent = `🎓 한자 ${level}급 퀴즈`;
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // 복습 모드 시작
+        function startReview() {
+            if (wrongAnswers.length === 0) return;
+            
+            isReviewMode = true;
+            questions = [...wrongAnswers].sort(() => Math.random() - 0.5);
+            wrongAnswers = [];
+            currentQuestion = 0;
+            score = 0;
+            
+            document.getElementById('result').classList.remove('show');
+            document.getElementById('quiz').style.display = 'block';
+            
+            document.querySelector('h1').textContent = `🎓 한자 ${currentLevel}급 복습`;
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // 인트로로 돌아가기
+        function backToIntro() {
+            document.getElementById('intro').style.display = 'block';
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').classList.remove('show');
+            document.querySelector('h1').textContent = '🎓 한자 급수 퀴즈';
+        }
+
+        // 문제 표시
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const question = questions[currentQuestion];
+            selectedChoice = null;
+
+            document.getElementById('questionText').textContent = 
+                `다음 중 "${question.meaning} ${question.sound}"의 한자 모양은?`;
+
+            const choices = [question];
+            const otherHanja = currentHanjaData.filter(h => h.char !== question.char);
+            
+            while (choices.length < 3) {
+                const random = otherHanja[Math.floor(Math.random() * otherHanja.length)];
+                if (!choices.find(c => c.char === random.char)) {
+                    choices.push(random);
+                }
+            }
+
+            choices.sort(() => Math.random() - 0.5);
+
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            
+            choices.forEach((choice, index) => {
+                const choiceDiv = document.createElement('div');
+                choiceDiv.className = 'choice';
+                choiceDiv.innerHTML = `
+                    <div class="hanja">${choice.char}</div>
+                    <div class="hanja-info">${choice.meaning} ${choice.sound}</div>
+                `;
+                choiceDiv.onclick = () => selectChoice(index, choice.char === question.char);
+                choicesDiv.appendChild(choiceDiv);
+            });
+
+            document.getElementById('checkBtn').classList.remove('hidden');
+            document.getElementById('checkBtn').disabled = true;
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('feedback').className = 'feedback';
+            
+            updateProgress();
+        }
+
+        // 보기 선택
+        function selectChoice(index, isCorrect) {
+            const choices = document.querySelectorAll('.choice');
+            choices.forEach(c => c.classList.remove('selected'));
+            choices[index].classList.add('selected');
+            
+            selectedChoice = { index, isCorrect };
+            document.getElementById('checkBtn').disabled = false;
+        }
+
+        // 정답 확인
+        function checkAnswer() {
+            if (!selectedChoice) return;
+
+            const choices = document.querySelectorAll('.choice');
+            const feedback = document.getElementById('feedback');
+            const question = questions[currentQuestion];
+
+            choices.forEach((choice, index) => {
+                choice.classList.add('disabled', 'show-info');
+                
+                if (index === selectedChoice.index) {
+                    if (selectedChoice.isCorrect) {
+                        choice.classList.add('correct');
+                        feedback.className = 'feedback correct show';
+                        feedback.innerHTML = '🎉 정답입니다!';
+                        
+                        // 프리미엄 단어 표시 (무료 8급/7급 제외)
+                        if (isPremium || (currentLevel !== 8 && currentLevel !== 7)) {
+                            if (question.words && question.words.length > 0) {
+                                const wordsHtml = question.words.map(w => `<div class="word-example">${w}</div>`).join('');
+                                feedback.innerHTML += `<div class="word-examples">${wordsHtml}</div>`;
+                            }
+                        }
+                        
+                        score++;
+                        stats.totalCorrect++;
+                    } else {
+                        choice.classList.add('incorrect');
+                        feedback.className = 'feedback incorrect show';
+                        feedback.textContent = '❌ 틀렸어요!';
+                        wrongAnswers.push(question);
+                        
+                        if (!stats.wrongWords[question.char]) {
+                            stats.wrongWords[question.char] = {
+                                count: 0,
+                                meaning: question.meaning,
+                                sound: question.sound
+                            };
+                        }
+                        stats.wrongWords[question.char].count++;
+                    }
+                }
+                
+                if (choice.querySelector('.hanja').textContent === question.char && !selectedChoice.isCorrect) {
+                    choice.classList.add('correct');
+                }
+            });
+
+            stats.totalQuestions++;
+            updateScore();
+            saveStats();
+            
+            document.getElementById('checkBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        // 다음 문제
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        // 점수 업데이트
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = currentQuestion;
+        }
+
+        // 진행도 업데이트
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        // 결과 표시
+        function showResult() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').classList.add('show');
+            
+            stats.totalQuizzes++;
+            saveStats();
+            
+            const percentage = (score / questions.length) * 100;
+            let emoji = '🎉';
+            
+            if (percentage === 100) emoji = '🏆';
+            else if (percentage >= 80) emoji = '😊';
+            else if (percentage >= 60) emoji = '🙂';
+            else emoji = '💪';
+            
+            document.getElementById('resultEmoji').textContent = emoji;
+            document.getElementById('finalScore').textContent = 
+                `${score} / ${questions.length} (${Math.round(percentage)}%)`;
+            
+            const wrongCountEl = document.getElementById('wrongCount');
+            const reviewBtn = document.getElementById('reviewBtn');
+            
+            if (wrongAnswers.length > 0) {
+                wrongCountEl.textContent = `틀린 한자: ${wrongAnswers.length}개`;
+                reviewBtn.disabled = false;
+            } else {
+                wrongCountEl.textContent = '완벽합니다! 🎊';
+                reviewBtn.disabled = true;
+            }
+
+            if (isReviewMode && wrongAnswers.length > 0) {
+                reviewBtn.textContent = '📚 다시 복습하기';
+            } else {
+                reviewBtn.textContent = '📚 틀린 한자 복습하기';
+            }
+        }
+
+        // 페이지 로드 시 초기화
+        init();
+    </script>
+</body>
+</html>
