@@ -925,41 +925,8 @@
         <!-- 홈 페이지 -->
         <div id="home" class="page active">
             <h2 class="page-title">급수를 선택하세요</h2>
-            <div class="level-grid">
-                <div class="level-card locked" onclick="showPaywall(3)">
-                    <div class="level-lock">🔒</div>
-                    <div class="level-badge premium">PRO</div>
-                    <div class="level-number">3급</div>
-                    <div class="level-info">1,817자 누적</div>
-                </div>
-                <div class="level-card locked" onclick="showPaywall(4)">
-                    <div class="level-lock">🔒</div>
-                    <div class="level-badge premium">PRO</div>
-                    <div class="level-number">4급</div>
-                    <div class="level-info">1,000자 누적</div>
-                </div>
-                <div class="level-card locked" onclick="showPaywall(5)">
-                    <div class="level-lock">🔒</div>
-                    <div class="level-badge premium">PRO</div>
-                    <div class="level-number">5급</div>
-                    <div class="level-info">500자 누적</div>
-                </div>
-                <div class="level-card locked" onclick="showPaywall(6)">
-                    <div class="level-lock">🔒</div>
-                    <div class="level-badge premium">PRO</div>
-                    <div class="level-number">6급</div>
-                    <div class="level-info">300자 누적</div>
-                </div>
-                <div class="level-card" onclick="startQuiz(7)">
-                    <div class="level-badge">무료</div>
-                    <div class="level-number">7급</div>
-                    <div class="level-info">150자 누적</div>
-                </div>
-                <div class="level-card" onclick="startQuiz(8)">
-                    <div class="level-badge">무료</div>
-                    <div class="level-number">8급</div>
-                    <div class="level-info">50자</div>
-                </div>
+            <div class="level-grid" id="levelGrid">
+                <!-- 동적으로 렌더링됩니다 -->
             </div>
         </div>
 
@@ -1213,6 +1180,7 @@
             loadProgress();
             updateMyPage();
             updatePremiumUI();
+            renderLevelCards(); // 급수 카드 렌더링
             
             // 광고 강제 표시
             setTimeout(() => {
@@ -1329,6 +1297,9 @@
                 // 무료: 광고 보이기
                 showAds();
             }
+            
+            // 급수 카드 다시 렌더링 (자물쇠 업데이트)
+            renderLevelCards();
         }
 
         function hideAds() {
@@ -1379,10 +1350,36 @@
         // Paywall
         function showPaywall(level) {
             if (isPremium) {
-                alert(`${level}급은 아직 준비 중입니다.\nJSON 파일을 업로드해주세요!`);
+                startQuiz(level);
                 return;
             }
             document.getElementById('paywall').classList.add('show');
+        }
+
+        function renderLevelCards() {
+            const levels = [
+                { level: 3, chars: 817, premium: true },
+                { level: 4, chars: 500, premium: true },
+                { level: 5, chars: 200, premium: true },
+                { level: 6, chars: 150, premium: true },
+                { level: 7, chars: 110, premium: false },
+                { level: 8, chars: 50, premium: false }
+            ];
+
+            const grid = document.getElementById('levelGrid');
+            grid.innerHTML = levels.map(({ level, chars, premium }) => {
+                const isLocked = premium && !isPremium;
+                const clickHandler = isLocked ? `showPaywall(${level})` : `startQuiz(${level})`;
+                
+                return `
+                    <div class="level-card ${isLocked ? 'locked' : ''}" onclick="${clickHandler}">
+                        ${isLocked ? '<div class="level-lock">🔒</div>' : ''}
+                        <div class="level-badge ${premium ? 'premium' : ''}">${premium ? (isPremium ? '💎 PRO' : 'PRO') : '무료'}</div>
+                        <div class="level-number">${level}급</div>
+                        <div class="level-info">${chars}자 ${level === 3 ? '누적' : ''}</div>
+                    </div>
+                `;
+            }).join('');
         }
 
         function closePaywall() {
@@ -1408,7 +1405,8 @@
             const data = sampleData[level];
             
             if (!data || data.length === 0) {
-                alert(`${level}급 데이터가 없습니다.`);
+                alert(`${level}급 데이터를 로딩 중입니다.\n잠시 후 다시 시도해주세요.`);
+                console.log('데이터 없음. 현재 sampleData:', sampleData);
                 return;
             }
 
@@ -1445,7 +1443,7 @@
             currentQuestion = 0;
             score = 0;
             
-            console.log('Switching to quiz page');
+            console.log('Switching to quiz page, quiz data:', quizData.length, '문제');
             showPage('quiz');
             
             // 약간의 딜레이 후 렌더링
@@ -1589,7 +1587,7 @@
             
             const percentage = Math.round((score / currentQuiz.length) * 100);
             const newLevel = calculateLevel();
-            const totalChars = sampleData[currentLevel].length;
+            const totalChars = (sampleData[currentLevel] && sampleData[currentLevel].length) || 0;
             const progress = levelProgress[currentLevel] || 0;
             
             document.getElementById('quizContent').innerHTML = `
@@ -1603,9 +1601,11 @@
                     <div style="font-size: 16px; color: var(--text-secondary); margin-bottom: 8px;">
                         ${score} / ${currentQuiz.length} 정답
                     </div>
+                    ${totalChars > 0 ? `
                     <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 32px;">
                         ${currentLevel}급 진행도: ${progress}/${totalChars} 학습 완료
                     </div>
+                    ` : ''}
                     
                     <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 32px; border-radius: 20px; margin-bottom: 24px;">
                         <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">현재 레벨</div>
@@ -1620,12 +1620,37 @@
                     </div>
                     
                     <div style="display: flex; gap: 12px; margin-top: 24px;">
-                        <button class="btn btn-secondary" style="flex: 1;" onclick="goHome()">홈으로</button>
-                        <button class="btn btn-secondary" style="flex: 1;" onclick="restartLevel(${currentLevel})">새 게임</button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="startQuiz(${currentLevel})">이어하기</button>
+                        <button class="btn btn-secondary" style="flex: 1;" onclick="handleGoHome()">홈으로</button>
+                        <button class="btn btn-secondary" style="flex: 1;" onclick="handleRestartLevel()">새 게임</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="handleContinueQuiz()">이어하기</button>
                     </div>
                 </div>
             `;
+        }
+
+        function handleGoHome() {
+            console.log('홈으로 버튼 클릭');
+            goHome();
+        }
+
+        function handleRestartLevel() {
+            console.log('새 게임 버튼 클릭, currentLevel:', currentLevel);
+            if (currentLevel) {
+                restartLevel(currentLevel);
+            } else {
+                alert('급수 정보가 없습니다. 홈으로 이동합니다.');
+                goHome();
+            }
+        }
+
+        function handleContinueQuiz() {
+            console.log('이어하기 버튼 클릭, currentLevel:', currentLevel);
+            if (currentLevel) {
+                startQuiz(currentLevel);
+            } else {
+                alert('급수 정보가 없습니다. 홈으로 이동합니다.');
+                goHome();
+            }
         }
 
         function restartLevel(level) {
