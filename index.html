@@ -1261,12 +1261,14 @@
             
             if (pageName === 'quiz') {
                 document.getElementById('quiz').classList.add('active');
-            } else {
-                document.getElementById(pageName).classList.add('active');
-                event.target.classList.add('active');
+            } else if (pageName === 'home') {
+                document.getElementById('home').classList.add('active');
+                document.querySelectorAll('.nav-tab')[0].classList.add('active');
+            } else if (pageName === 'mypage') {
+                document.getElementById('mypage').classList.add('active');
+                document.querySelectorAll('.nav-tab')[1].classList.add('active');
+                updateMyPage();
             }
-            
-            if (pageName === 'mypage') updateMyPage();
         }
 
         // 설정 패널
@@ -1385,6 +1387,7 @@
 
         // 퀴즈 시작
         function startQuiz(level) {
+            console.log('startQuiz called:', level);
             currentLevel = level;
             const data = sampleData[level];
             
@@ -1396,6 +1399,8 @@
             // 현재 진행도 가져오기
             const startIndex = levelProgress[level] || 0;
             const totalChars = data.length;
+            
+            console.log('Progress:', startIndex, '/', totalChars);
             
             // 10문제 선택 (순환)
             let endIndex = startIndex + 10;
@@ -1424,8 +1429,13 @@
             currentQuestion = 0;
             score = 0;
             
+            console.log('Switching to quiz page');
             showPage('quiz');
-            renderQuestion();
+            
+            // 약간의 딜레이 후 렌더링
+            setTimeout(() => {
+                renderQuestion();
+            }, 100);
         }
 
         function renderQuestion() {
@@ -1603,15 +1613,13 @@
         }
 
         function restartLevel(level) {
+            console.log('restartLevel called:', level);
             resetProgress(level);
             startQuiz(level);
         }
 
         function goHome() {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            document.getElementById('home').classList.add('active');
-            document.querySelector('.nav-tab').classList.add('active');
+            showPage('home');
         }
 
         // 마이페이지
