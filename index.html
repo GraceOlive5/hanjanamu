@@ -73,6 +73,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
         }
 
         .app-title {
@@ -83,6 +84,43 @@
             align-items: center;
             gap: 8px;
             letter-spacing: -0.5px;
+        }
+
+        .header-tabs {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+            justify-content: flex-end;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 4px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-tab {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 8px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: var(--font-sans);
+            position: relative;
+        }
+
+        .header-tab:hover {
+            color: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .header-tab.active {
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
         }
 
         .settings-btn {
@@ -761,10 +799,10 @@
             background: var(--surface);
             border: 2px solid var(--border);
             border-radius: 16px;
-            padding: 16px 12px;
+            padding: 14px 10px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 90px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -867,21 +905,17 @@
         <!-- 헤더 -->
         <header class="app-header">
             <div class="header-content">
-                <h1 class="app-title">
+                <h1 class="app-title" style="font-size: 20px; flex: 0 0 auto;">
                     <span>한자나무</span>
                     <span>🌳</span>
                 </h1>
-                <button class="settings-btn" onclick="openSettings()" aria-label="설정">
-                    ⚙️
-                </button>
+                <nav class="header-tabs">
+                    <button class="header-tab active" onclick="showPage('home')">홈</button>
+                    <button class="header-tab" onclick="showPage('mypage')">마이</button>
+                    <button class="header-tab" onclick="openSettings()">설정</button>
+                </nav>
             </div>
         </header>
-
-        <!-- 네비게이션 -->
-        <nav class="nav-tabs">
-            <button class="nav-tab active" onclick="showPage('home')">홈</button>
-            <button class="nav-tab" onclick="showPage('mypage')">마이페이지</button>
-        </nav>
 
         <!-- 상단 배너 광고 -->
         <div class="ad-banner ad-banner-top" id="topAdBanner">
@@ -933,17 +967,17 @@
         <div id="mypage" class="page">
             <div class="stats-card">
                 <div class="stats-header">
-                    <div class="level-title">나의 레벨</div>
-                    <div class="level-display" id="userLevel">🥉 Bronze</div>
-                    <div class="level-progress">
-                        Bronze (0점) → Silver (50점) → Gold (200점)<br>
-                        Platinum (500점) → Diamond (1,000점)
+                    <div class="level-title">나의 어휘력 생태계</div>
+                    <div class="level-display" id="userLevel">🌱 씨앗</div>
+                    <div class="level-progress" id="treeProgress">
+                        30점 = 나무 1그루 심기 🌳<br>
+                        🌱씨앗(0) → 🌿새싹(30) → 🪴묘목(150) → 🌳나무(300) → 🏞️동산(900) → ⛰️산(1.5K) → 🏔️큰산(3K) → 🌲숲(5K) → 🌳울창한숲(10K)
                     </div>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <span class="stat-value" id="totalQuizzes">0</span>
-                        <div class="stat-label">총 퀴즈</div>
+                        <span class="stat-value" id="totalTrees">0</span>
+                        <div class="stat-label">심은 나무</div>
                     </div>
                     <div class="stat-item">
                         <span class="stat-value" id="correctRate">0%</span>
@@ -976,11 +1010,11 @@
 
         <!-- 퀴즈 페이지 -->
         <div id="quiz" class="page">
-            <div id="quizHeader" style="padding: 16px 20px; background: var(--surface); border-bottom: 1px solid var(--border);"></div>
-            <div id="quizContent" style="padding: 20px;">
+            <div id="quizHeader" style="padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--border);"></div>
+            <div id="quizContent" style="padding: 16px 20px;">
                 <div id="questionText"></div>
-                <div id="feedbackContainer" style="margin-top: 20px;"></div>
-                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display: none; margin-top: 20px;">
+                <div id="feedbackContainer" style="margin-top: 16px;"></div>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display: none; margin-top: 16px;">
                     다음 문제
                 </button>
             </div>
@@ -1112,59 +1146,38 @@
     <script>
         // 샘플 데이터 (8급 50자)
         const sampleData = {
-            8: [
-                { char: '一', sound: '일', meaning: '한', words: ['일치(一致)', '일등(一等)'] },
-                { char: '二', sound: '이', meaning: '두', words: ['이중(二重)', '이심(二心)'] },
-                { char: '三', sound: '삼', meaning: '석', words: ['삼국(三國)', '삼각(三角)'] },
-                { char: '四', sound: '사', meaning: '넉', words: ['사방(四方)', '사계(四季)'] },
-                { char: '五', sound: '오', meaning: '다섯', words: ['오감(五感)', '오행(五行)'] },
-                { char: '六', sound: '육', meaning: '여섯', words: ['육감(六感)', '육체(六體)'] },
-                { char: '七', sound: '칠', meaning: '일곱', words: ['칠일(七日)', '칠색(七色)'] },
-                { char: '八', sound: '팔', meaning: '여덟', words: ['팔방(八方)', '팔도(八道)'] },
-                { char: '九', sound: '구', meaning: '아홉', words: ['구월(九月)', '구름(九-)'] },
-                { char: '十', sound: '십', meaning: '열', words: ['십일(十一)', '십분(十分)'] },
-                { char: '百', sound: '백', meaning: '일백', words: ['백성(百姓)', '백년(百年)'] },
-                { char: '千', sound: '천', meaning: '일천', words: ['천년(千年)', '천지(千地)'] },
-                { char: '萬', sound: '만', meaning: '일만', words: ['만세(萬歲)', '만물(萬物)'] },
-                { char: '上', sound: '상', meaning: '위', words: ['상하(上下)', '상승(上昇)'] },
-                { char: '下', sound: '하', meaning: '아래', words: ['하강(下降)', '하품(下品)'] },
-                { char: '中', sound: '중', meaning: '가운데', words: ['중간(中間)', '중심(中心)'] },
-                { char: '大', sound: '대', meaning: '큰', words: ['대한(大韓)', '대학(大學)'] },
-                { char: '小', sound: '소', meaning: '작을', words: ['소학(小學)', '소인(小人)'] },
-                { char: '人', sound: '인', meaning: '사람', words: ['인간(人間)', '인생(人生)'] },
-                { char: '日', sound: '일', meaning: '날', words: ['일요(日曜)', '일출(日出)'] },
-                { char: '月', sound: '월', meaning: '달', words: ['월요(月曜)', '월광(月光)'] },
-                { char: '火', sound: '화', meaning: '불', words: ['화요(火曜)', '화재(火災)'] },
-                { char: '水', sound: '수', meaning: '물', words: ['수요(水曜)', '수도(水道)'] },
-                { char: '木', sound: '목', meaning: '나무', words: ['목요(木曜)', '목재(木材)'] },
-                { char: '金', sound: '금', meaning: '쇠', words: ['금요(金曜)', '금속(金屬)'] },
-                { char: '土', sound: '토', meaning: '흙', words: ['토요(土曜)', '토지(土地)'] },
-                { char: '山', sound: '산', meaning: '뫼', words: ['산림(山林)', '산천(山川)'] },
-                { char: '川', sound: '천', meaning: '내', words: ['천지(川地)', '하천(河川)'] },
-                { char: '男', sound: '남', meaning: '사내', words: ['남자(男子)', '남성(男性)'] },
-                { char: '女', sound: '녀', meaning: '여자', words: ['여자(女子)', '여성(女性)'] },
-                { char: '子', sound: '자', meaning: '아들', words: ['자녀(子女)', '자식(子息)'] },
-                { char: '文', sound: '문', meaning: '글월', words: ['문자(文字)', '문학(文學)'] },
-                { char: '字', sound: '자', meaning: '글자', words: ['한자(漢字)', '문자(文字)'] },
-                { char: '天', sound: '천', meaning: '하늘', words: ['천국(天國)', '천지(天地)'] },
-                { char: '地', sound: '지', meaning: '땅', words: ['지구(地球)', '토지(土地)'] },
-                { char: '白', sound: '백', meaning: '흰', words: ['백색(白色)', '백지(白紙)'] },
-                { char: '先', sound: '선', meaning: '먼저', words: ['선생(先生)', '선조(先祖)'] },
-                { char: '生', sound: '생', meaning: '날', words: ['생일(生日)', '학생(學生)'] },
-                { char: '王', sound: '왕', meaning: '임금', words: ['왕국(王國)', '왕자(王子)'] },
-                { char: '玉', sound: '옥', meaning: '구슬', words: ['옥석(玉石)', '보옥(寶玉)'] },
-                { char: '犬', sound: '견', meaning: '개', words: ['애견(愛犬)', '명견(名犬)'] },
-                { char: '竹', sound: '죽', meaning: '대나무', words: ['죽순(竹筍)', '대죽(大竹)'] },
-                { char: '米', sound: '미', meaning: '쌀', words: ['미곡(米穀)', '백미(白米)'] },
-                { char: '糸', sound: '사', meaning: '실', words: ['사선(絲線)', '실사(實絲)'] },
-                { char: '貝', sound: '패', meaning: '조개', words: ['패류(貝類)', '조개(貝)'] },
-                { char: '車', sound: '차', meaning: '수레', words: ['차량(車輛)', '자동차(自動車)'] },
-                { char: '足', sound: '족', meaning: '발', words: ['족구(足球)', '만족(滿足)'] },
-                { char: '雨', sound: '우', meaning: '비', words: ['우산(雨傘)', '우천(雨天)'] },
-                { char: '草', sound: '초', meaning: '풀', words: ['초원(草原)', '잡초(雜草)'] },
-                { char: '門', sound: '문', meaning: '문', words: ['문호(門戶)', '대문(大門)'] }
-            ]
+            8: [],
+            7: [],
+            6: [],
+            5: [],
+            4: [],
+            3: []
         };
+
+        // GitHub에서 JSON 로드
+        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/graceolive5/hanjanamu/main/';
+        
+        async function loadLevelData(level) {
+            try {
+                const response = await fetch(`${GITHUB_BASE_URL}level${level}.json`);
+                if (!response.ok) throw new Error('Failed to load');
+                const data = await response.json();
+                sampleData[level] = data;
+                console.log(`✅ ${level}급 데이터 로드 완료:`, data.length, '자');
+                return data;
+            } catch (error) {
+                console.error(`❌ ${level}급 데이터 로드 실패:`, error);
+                return [];
+            }
+        }
+
+        // 앱 시작 시 모든 데이터 로드
+        async function preloadAllData() {
+            console.log('📂 데이터 로딩 시작...');
+            const levels = [8, 7, 6, 5, 4, 3];
+            await Promise.all(levels.map(level => loadLevelData(level)));
+            console.log('✅ 모든 데이터 로드 완료!');
+        }
 
         // 앱 상태
         let isPremium = false;
@@ -1205,6 +1218,9 @@
             setTimeout(() => {
                 showAds();
             }, 100);
+            
+            // JSON 데이터 로드
+            preloadAllData();
         }
 
         function loadStats() {
@@ -1257,16 +1273,16 @@
         // 페이지 전환
         function showPage(pageName) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
             
             if (pageName === 'quiz') {
                 document.getElementById('quiz').classList.add('active');
             } else if (pageName === 'home') {
                 document.getElementById('home').classList.add('active');
-                document.querySelectorAll('.nav-tab')[0].classList.add('active');
+                document.querySelectorAll('.header-tab')[0].classList.add('active');
             } else if (pageName === 'mypage') {
                 document.getElementById('mypage').classList.add('active');
-                document.querySelectorAll('.nav-tab')[1].classList.add('active');
+                document.querySelectorAll('.header-tab')[1].classList.add('active');
                 updateMyPage();
             }
         }
@@ -1467,10 +1483,10 @@
             // 박스 없이 한자 + 선택지 가로 3개 (공간 최적화)
             document.getElementById('questionText').innerHTML = `
                 <div style="text-align: center;">
-                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">다음 한자의 음과 뜻은?</div>
-                    <div style="font-size: 100px; font-weight: 700; font-family: var(--font-display); color: var(--primary); margin: 20px 0; line-height: 1;">${question.char}</div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">다음 한자의 음과 뜻은?</div>
+                    <div style="font-size: 90px; font-weight: 700; font-family: var(--font-display); color: var(--primary); margin: 16px 0; line-height: 1;">${question.char}</div>
                     
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
                         ${choices.map((choice, index) => `
                             <div class="quiz-choice" onclick="selectChoice(${index}, '${choice.char}', '${question.char}')">
                                 <div class="choice-text">
@@ -1508,16 +1524,16 @@
                         stats.totalCorrect++;
                         
                         let feedback = `
-                            <div style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); padding: 16px; border-radius: 12px; border-left: 4px solid var(--success);">
-                                <div style="font-size: 16px; font-weight: 600; color: var(--success); margin-bottom: 6px;">✅ 정답입니다!</div>
+                            <div style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--success);">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--success); margin-bottom: 4px;">✅ 정답입니다!</div>
                         `;
                         
                         // 프리미엄 단어 표시
                         if (isPremium && question.words && question.words.length > 0) {
                             feedback += `
-                                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(39, 174, 96, 0.2);">
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">💎 활용 단어</div>
-                                    ${question.words.map(w => `<div style="font-size: 14px; color: var(--text-primary); margin: 3px 0;">${w}</div>`).join('')}
+                                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(39, 174, 96, 0.2);">
+                                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">💎 활용 단어</div>
+                                    ${question.words.map(w => `<div style="font-size: 13px; color: var(--text-primary); margin: 2px 0;">${w}</div>`).join('')}
                                 </div>
                             `;
                         }
@@ -1537,9 +1553,9 @@
                         stats.wrongWords[question.char].count++;
                         
                         document.getElementById('feedbackContainer').innerHTML = `
-                            <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 16px; border-radius: 12px; border-left: 4px solid var(--error);">
-                                <div style="font-size: 16px; font-weight: 600; color: var(--error); margin-bottom: 4px;">❌ 틀렸어요</div>
-                                <div style="font-size: 13px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
+                            <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--error);">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--error); margin-bottom: 3px;">❌ 틀렸어요</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
                             </div>
                         `;
                     }
@@ -1625,11 +1641,34 @@
         // 마이페이지
         function calculateLevel() {
             const score = stats.totalCorrect;
-            if (score >= 1000) return '💎 Diamond';
-            if (score >= 500) return '🏆 Platinum';
-            if (score >= 200) return '🥇 Gold';
-            if (score >= 50) return '🥈 Silver';
-            return '🥉 Bronze';
+            const trees = Math.floor(score / 30); // 30점 = 나무 1그루
+            
+            if (score >= 10000) return `🌳 울창한 숲`;
+            if (score >= 5000) return `🌲 숲`;
+            if (score >= 3000) return `🏔️ 큰 산`;
+            if (score >= 1500) return `⛰️ 산`;
+            if (score >= 900) return `🏞️ 동산`;
+            if (score >= 300) return `🌳 나무`;
+            if (score >= 150) return `🪴 묘목`;
+            if (score >= 30) return `🌿 새싹`;
+            return '🌱 씨앗';
+        }
+        
+        function getTreeCount() {
+            return Math.floor(stats.totalCorrect / 30);
+        }
+
+        function getNextLevelInfo() {
+            const score = stats.totalCorrect;
+            if (score >= 10000) return { next: '최고 레벨!', required: 10000, trees: Math.floor(score / 30) };
+            if (score >= 5000) return { next: '🌲 울창한 숲', required: 10000, trees: Math.floor(score / 30) };
+            if (score >= 3000) return { next: '🌳 숲', required: 5000, trees: Math.floor(score / 30) };
+            if (score >= 1500) return { next: '🏔️ 큰 산', required: 3000, trees: Math.floor(score / 30) };
+            if (score >= 900) return { next: '⛰️ 산', required: 1500, trees: Math.floor(score / 30) };
+            if (score >= 300) return { next: '🏞️ 동산', required: 900, trees: Math.floor(score / 30) };
+            if (score >= 150) return { next: '🌳 나무', required: 300, trees: Math.floor(score / 30) };
+            if (score >= 30) return { next: '🪴 묘목', required: 150, trees: Math.floor(score / 30) };
+            return { next: '🌿 새싹', required: 30, trees: 0 };
         }
 
         function calculateCorrectRate() {
@@ -1641,7 +1680,7 @@
             stats.level = calculateLevel();
             
             document.getElementById('userLevel').textContent = stats.level;
-            document.getElementById('totalQuizzes').textContent = stats.totalQuizzes;
+            document.getElementById('totalTrees').textContent = getTreeCount() + '그루';
             document.getElementById('correctRate').textContent = calculateCorrectRate() + '%';
             document.getElementById('totalScore').textContent = stats.totalCorrect;
             
@@ -1798,9 +1837,9 @@
                         stats.wrongWords[question.char].count++;
                         
                         document.getElementById('feedbackContainer').innerHTML = `
-                            <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 16px; border-radius: 12px; border-left: 4px solid var(--error);">
-                                <div style="font-size: 16px; font-weight: 600; color: var(--error); margin-bottom: 4px;">❌ 틀렸어요</div>
-                                <div style="font-size: 13px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
+                            <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--error);">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--error); margin-bottom: 3px;">❌ 틀렸어요</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
                             </div>
                         `;
                     }
