@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -24,895 +23,897 @@
             --success: #27AE60;
             --error: #E74C3C;
             --warning: #F39C12;
-
-```
-        /* 그림자 시스템 */
-        --shadow-sm: 0 1px 3px rgba(44, 62, 80, 0.08);
-        --shadow-md: 0 4px 12px rgba(44, 62, 80, 0.12);
-        --shadow-lg: 0 8px 24px rgba(44, 62, 80, 0.16);
-        
-        /* 타이포그래피 */
-        --font-sans: 'Noto Sans KR', -apple-system, sans-serif;
-        --font-display: 'Nanum Myeongjo', serif;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: var(--font-sans);
-        background: var(--background);
-        color: var(--text-primary);
-        line-height: 1.6;
-        min-height: 100vh;
-    }
-
-    /* 컨테이너 */
-    .app-container {
-        max-width: 640px;
-        margin: 0 auto;
-        min-height: 100vh;
-        background: var(--surface);
-        box-shadow: var(--shadow-lg);
-        position: relative;
-    }
-
-    /* 헤더 */
-    .app-header {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: white;
-        padding: 24px 20px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        box-shadow: var(--shadow-md);
-    }
-
-    .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .app-title {
-        font-family: var(--font-display);
-        font-size: 24px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        letter-spacing: -0.5px;
-    }
-
-    .header-tabs {
-        display: flex;
-        gap: 4px;
-        flex: 1;
-        justify-content: flex-end;
-        background: rgba(255, 255, 255, 0.12);
-        padding: 4px;
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-    }
-
-    .header-tab {
-        background: none;
-        border: none;
-        color: rgba(255, 255, 255, 0.75);
-        padding: 8px 18px;
-        border-radius: 9px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        font-family: var(--font-sans);
-        position: relative;
-    }
-
-    .header-tab:hover {
-        color: rgba(255, 255, 255, 0.95);
-        background: rgba(255, 255, 255, 0.08);
-    }
-
-    .header-tab.active {
-        background: white;
-        color: var(--primary);
-        font-weight: 600;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .settings-btn {
-        background: rgba(255, 255, 255, 0.15);
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(10px);
-    }
-
-    .settings-btn:hover {
-        background: rgba(255, 255, 255, 0.25);
-        transform: rotate(90deg);
-    }
-
-    /* 네비게이션 */
-    .nav-tabs {
-        display: flex;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 72px;
-        z-index: 99;
-    }
-
-    .nav-tab {
-        flex: 1;
-        background: none;
-        border: none;
-        padding: 16px;
-        font-size: 15px;
-        font-weight: 500;
-        color: var(--text-secondary);
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s;
-        font-family: var(--font-sans);
-    }
-
-    .nav-tab::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--primary);
-        transform: scaleX(0);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .nav-tab.active {
-        color: var(--primary);
-    }
-
-    .nav-tab.active::after {
-        transform: scaleX(1);
-    }
-
-    /* 페이지 */
-    .page {
-        display: none;
-        padding: 24px 20px;
-        animation: fadeIn 0.4s ease-out;
-    }
-
-    .page.active {
-        display: block;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
+            
+            /* 그림자 시스템 */
+            --shadow-sm: 0 1px 3px rgba(44, 62, 80, 0.08);
+            --shadow-md: 0 4px 12px rgba(44, 62, 80, 0.12);
+            --shadow-lg: 0 8px 24px rgba(44, 62, 80, 0.16);
+            
+            /* 타이포그래피 */
+            --font-sans: 'Noto Sans KR', -apple-system, sans-serif;
+            --font-display: 'Nanum Myeongjo', serif;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    }
 
-    /* 레벨 그리드 */
-    .page-title {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 24px;
-        color: var(--text-primary);
-    }
-
-    .level-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        margin-bottom: 32px;
-    }
-
-    .level-card {
-        background: var(--surface);
-        border: 2px solid var(--border);
-        border-radius: 16px;
-        padding: 24px;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .level-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .level-card:hover {
-        border-color: var(--primary);
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .level-card:hover::before {
-        opacity: 0.05;
-    }
-
-    .level-card.locked {
-        border-color: var(--border);
-        background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-    }
-
-    .level-card.locked:hover {
-        transform: translateY(-2px);
-    }
-
-    .level-badge {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        background: var(--secondary);
-        color: white;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 12px;
-        letter-spacing: 0.5px;
-    }
-
-    .level-badge.premium {
-        background: linear-gradient(135deg, #FFD700, #FFA500);
-    }
-
-    .level-number {
-        font-family: var(--font-display);
-        font-size: 32px;
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 8px;
-    }
-
-    .level-card.locked .level-number {
-        color: var(--text-muted);
-    }
-
-    .level-info {
-        font-size: 13px;
-        color: var(--text-secondary);
-    }
-
-    .level-lock {
-        font-size: 24px;
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        opacity: 0.3;
-    }
-
-    /* 설정 패널 */
-    .settings-panel {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 320px;
-        height: 100vh;
-        background: var(--surface);
-        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-    }
-
-    .settings-panel.open {
-        right: 0;
-    }
-
-    .settings-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(44, 62, 80, 0.5);
-        z-index: 999;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-    }
-
-    .settings-overlay.show {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .settings-header {
-        padding: 24px 20px;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .settings-title {
-        font-size: 18px;
-        font-weight: 700;
-    }
-
-    .close-settings {
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: var(--text-secondary);
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        transition: all 0.2s;
-    }
-
-    .close-settings:hover {
-        background: var(--background);
-        color: var(--text-primary);
-    }
-
-    .settings-content {
-        padding: 20px;
-    }
-
-    .settings-section {
-        margin-bottom: 32px;
-    }
-
-    .section-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 16px;
-    }
-
-    .input-group {
-        margin-bottom: 16px;
-    }
-
-    .input-label {
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 8px;
-        color: var(--text-primary);
-    }
-
-    .text-input {
-        width: 100%;
-        padding: 12px 16px;
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        font-size: 15px;
-        font-family: var(--font-sans);
-        transition: all 0.3s;
-        text-align: center;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    .text-input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
-    }
-
-    .btn {
-        width: 100%;
-        padding: 14px 20px;
-        border: none;
-        border-radius: 12px;
-        font-size: 15px;
-        font-weight: 600;
-        font-family: var(--font-sans);
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .btn-secondary {
-        background: var(--background);
-        color: var(--text-primary);
-    }
-
-    .btn-secondary:hover {
-        background: var(--border);
-    }
-
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: var(--background);
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .status-badge.premium {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
-        color: #D97706;
-    }
-
-    /* 마이페이지 */
-    .stats-card {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        padding: 32px 24px;
-        border-radius: 20px;
-        margin-bottom: 24px;
-        box-shadow: var(--shadow-lg);
-    }
-
-    .stats-header {
-        text-align: center;
-        margin-bottom: 24px;
-    }
-
-    .level-title {
-        font-size: 14px;
-        opacity: 0.9;
-        margin-bottom: 8px;
-    }
-
-    .level-display {
-        font-size: 36px;
-        font-weight: 700;
-        font-family: var(--font-display);
-        letter-spacing: 1px;
-    }
-
-    .level-progress {
-        font-size: 12px;
-        opacity: 0.8;
-        margin-top: 8px;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-        padding-top: 16px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-value {
-        font-size: 28px;
-        font-weight: 700;
-        display: block;
-        margin-bottom: 4px;
-    }
-
-    .stat-label {
-        font-size: 12px;
-        opacity: 0.85;
-    }
-
-    .section {
-        margin-bottom: 32px;
-    }
-
-    .section-header {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 16px;
-    }
-
-    .section-header h3 {
-        font-size: 18px;
-        font-weight: 700;
-    }
-
-    .wrong-words-list {
-        background: var(--background);
-        border-radius: 16px;
-        padding: 16px;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    .wrong-word-item {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px;
-        background: white;
-        border-radius: 12px;
-        margin-bottom: 12px;
-        box-shadow: var(--shadow-sm);
-        transition: all 0.2s;
-    }
-
-    .wrong-word-item:hover {
-        transform: translateX(4px);
-        box-shadow: var(--shadow-md);
-    }
-
-    .wrong-word-char {
-        font-size: 32px;
-        font-weight: 700;
-        font-family: var(--font-display);
-        color: var(--primary);
-        min-width: 50px;
-        text-align: center;
-    }
-
-    .wrong-word-info {
-        flex: 1;
-    }
-
-    .wrong-word-meaning {
-        font-size: 15px;
-        color: var(--text-primary);
-        font-weight: 500;
-    }
-
-    .wrong-count {
-        background: var(--error);
-        color: white;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: 600;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 48px 24px;
-        color: var(--text-muted);
-    }
-
-    .empty-icon {
-        font-size: 48px;
-        margin-bottom: 16px;
-        opacity: 0.5;
-    }
-
-    /* Paywall */
-    .paywall {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(44, 62, 80, 0.8);
-        backdrop-filter: blur(8px);
-        z-index: 2000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    .paywall.show {
-        display: flex;
-    }
-
-    .paywall-card {
-        background: white;
-        border-radius: 24px;
-        padding: 40px 32px;
-        max-width: 480px;
-        width: 100%;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(40px);
+        body {
+            font-family: var(--font-sans);
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
 
-    .paywall-icon {
-        font-size: 64px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .paywall-title {
-        font-size: 24px;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 12px;
-        color: var(--text-primary);
-    }
-
-    .paywall-desc {
-        text-align: center;
-        color: var(--text-secondary);
-        margin-bottom: 32px;
-        line-height: 1.6;
-    }
-
-    .feature-list {
-        background: var(--background);
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 32px;
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .feature-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .feature-icon {
-        font-size: 20px;
-        margin-top: 2px;
-    }
-
-    .feature-text {
-        flex: 1;
-        font-size: 15px;
-        color: var(--text-primary);
-    }
-
-    .price-options {
-        margin-bottom: 24px;
-    }
-
-    .price-card {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        padding: 20px;
-        border-radius: 16px;
-        margin-bottom: 12px;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .price-card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .price-amount {
-        font-size: 32px;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    .price-period {
-        font-size: 14px;
-        opacity: 0.9;
-    }
-
-    .price-badge {
-        display: inline-block;
-        background: rgba(255, 215, 0, 0.9);
-        color: #1a1a1a;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-size: 12px;
-        font-weight: 700;
-        margin-top: 8px;
-    }
-
-    .paywall-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .link-button {
-        background: none;
-        border: none;
-        color: var(--primary);
-        font-size: 14px;
-        text-decoration: underline;
-        cursor: pointer;
-        padding: 8px;
-    }
-
-    /* 반응형 */
-    @media (max-width: 640px) {
+        /* 컨테이너 */
         .app-container {
-            box-shadow: none;
+            max-width: 640px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--surface);
+            box-shadow: var(--shadow-lg);
+            position: relative;
         }
 
+        /* 헤더 */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 24px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .app-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-tabs {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+            justify-content: flex-end;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 4px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-tab {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 8px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: var(--font-sans);
+            position: relative;
+        }
+
+        .header-tab:hover {
+            color: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .header-tab.active {
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg);
+        }
+
+        /* 네비게이션 */
+        .nav-tabs {
+            display: flex;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 72px;
+            z-index: 99;
+        }
+
+        .nav-tab {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            font-family: var(--font-sans);
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-tab.active {
+            color: var(--primary);
+        }
+
+        .nav-tab.active::after {
+            transform: scaleX(1);
+        }
+
+        /* 페이지 */
+        .page {
+            display: none;
+            padding: 24px 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 레벨 그리드 */
+        .page-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .level-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .level-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .level-card.locked {
+            border-color: var(--border);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+        }
+
+        .level-card.locked:hover {
+            transform: translateY(-2px);
+        }
+
+        .level-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .level-badge.premium {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+
+        .level-number {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .level-card.locked .level-number {
+            color: var(--text-muted);
+        }
+
+        .level-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .level-lock {
+            font-size: 24px;
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            opacity: 0.3;
+        }
+
+        /* 설정 패널 */
         .settings-panel {
-            width: 100%;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: var(--surface);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
         }
-    }
 
-    /* 로딩 상태 */
-    .loading {
-        text-align: center;
-        padding: 48px 20px;
-        color: var(--text-secondary);
-    }
+        .settings-panel.open {
+            right: 0;
+        }
 
-    .loading-spinner {
-        width: 48px;
-        height: 48px;
-        border: 4px solid var(--border);
-        border-top-color: var(--primary);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 16px;
-    }
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(44, 62, 80, 0.5);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
 
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
+        .settings-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    /* 퀴즈 선택지 */
-    .quiz-choice {
-        background: var(--surface);
-        border: 2px solid var(--border);
-        border-radius: 16px;
-        padding: 14px 10px;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .settings-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .quiz-choice:hover {
-        border-color: var(--primary);
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-md);
-    }
+        .settings-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
 
-    .quiz-choice.correct {
-        border-color: var(--success);
-        background: linear-gradient(135deg, rgba(39, 174, 96, 0.15), rgba(39, 174, 96, 0.08));
-    }
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
 
-    .quiz-choice.incorrect {
-        border-color: var(--error);
-        background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.08));
-    }
+        .close-settings:hover {
+            background: var(--background);
+            color: var(--text-primary);
+        }
 
-    .quiz-choice.correct-answer {
-        border-color: var(--success);
-        background: linear-gradient(135deg, rgba(39, 174, 96, 0.2), rgba(39, 174, 96, 0.1));
-    }
+        .settings-content {
+            padding: 20px;
+        }
 
-    .choice-text {
-        width: 100%;
-        text-align: center;
-    }
+        .settings-section {
+            margin-bottom: 32px;
+        }
 
-    .choice-meaning {
-        font-size: 17px;
-        font-weight: 700;
-        margin-bottom: 6px;
-        line-height: 1.3;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
 
-    .choice-sound {
-        font-size: 14px;
-        color: var(--text-secondary);
-        line-height: 1.2;
-    }
+        .input-group {
+            margin-bottom: 16px;
+        }
 
-    /* 광고 배너 */
-    .ad-banner {
-        background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 12px;
-        text-align: center;
-        font-size: 11px;
-        color: var(--text-muted);
-        margin: 16px auto;
-        max-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 50px;
-    }
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
 
-    .ad-banner-top {
-        margin: 0;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        border-top: none;
-    }
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: var(--font-sans);
+            transition: all 0.3s;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
-    .ad-banner-bottom {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
-        z-index: 200;
-        background: white;
-        box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-    }
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+        }
 
-    .ad-banner-result {
-        min-height: 250px;
-        max-width: 300px;
-    }
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    /* 하단 광고 있을 때 페이지 패딩 */
-    .page {
-        padding-bottom: 70px;
-    }
-</style>
-```
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
 
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--background);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--background);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-badge.premium {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
+            color: #D97706;
+        }
+
+        /* 마이페이지 */
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 32px 24px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .level-title {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .level-display {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            letter-spacing: 1px;
+        }
+
+        .level-progress {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .section-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .wrong-words-list {
+            background: var(--background);
+            border-radius: 16px;
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .wrong-word-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .wrong-word-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .wrong-word-char {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--primary);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .wrong-word-info {
+            flex: 1;
+        }
+
+        .wrong-word-meaning {
+            font-size: 15px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .wrong-count {
+            background: var(--error);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Paywall */
+        .paywall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(44, 62, 80, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .paywall.show {
+            display: flex;
+        }
+
+        .paywall-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 32px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .paywall-icon {
+            font-size: 64px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .paywall-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .paywall-desc {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            background: var(--background);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feature-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-icon {
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .feature-text {
+            flex: 1;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .price-options {
+            margin-bottom: 24px;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .price-amount {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .price-period {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.9);
+            color: #1a1a1a;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .paywall-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* 반응형 */
+        @media (max-width: 640px) {
+            .app-container {
+                box-shadow: none;
+            }
+
+            .settings-panel {
+                width: 100%;
+            }
+        }
+
+        /* 로딩 상태 */
+        .loading {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 퀴즈 선택지 */
+        .quiz-choice {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-choice:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quiz-choice.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.15), rgba(39, 174, 96, 0.08));
+        }
+
+        .quiz-choice.incorrect {
+            border-color: var(--error);
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.08));
+        }
+
+        .quiz-choice.correct-answer {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.2), rgba(39, 174, 96, 0.1));
+        }
+
+        .choice-text {
+            width: 100%;
+            text-align: center;
+        }
+
+        .choice-meaning {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .choice-sound {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.2;
+        }
+
+        /* 광고 배너 */
+        .ad-banner {
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin: 16px auto;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+        }
+
+        .ad-banner-top {
+            margin: 0;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+        }
+
+        .ad-banner-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            z-index: 200;
+            background: white;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+        }
+
+        .ad-banner-result {
+            min-height: 250px;
+            max-width: 300px;
+        }
+
+        /* 하단 광고 있을 때 페이지 패딩 */
+        .page {
+            padding-bottom: 70px;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
         <!-- 헤더 -->
         <header class="app-header">
             <div class="header-content">
-                <h1 class="app-title" style="font-size: 20px; flex: 0 0 auto;">
-                    <span>한자나무</span>
-                    <span>🌳</span>
-                </h1>
+                <div style="flex: 0 0 auto;">
+                    <h1 class="app-title" style="font-size: 20px; margin: 0; line-height: 1.2;">
+                        <span>한자나무</span>
+                        <span>🌳</span>
+                    </h1>
+                    <div style="font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 2px; font-weight: 400;">
+                        한 글자씩 쌓는 어휘력
+                    </div>
+                </div>
                 <nav class="header-tabs">
                     <button class="header-tab active" onclick="showPage('home')">홈</button>
                     <button class="header-tab" onclick="showPage('mypage')">마이</button>
@@ -921,1053 +922,1093 @@
             </div>
         </header>
 
-```
-    <!-- 상단 배너 광고 -->
-    <div class="ad-banner ad-banner-top" id="topAdBanner">
-        📢 광고 영역 (320x50) - AdMob/AdFit 연동
-    </div>
-
-    <!-- 홈 페이지 -->
-    <div id="home" class="page active">
-        <h2 class="page-title">급수를 선택하세요</h2>
-        <div class="level-grid" id="levelGrid">
-            <!-- 동적으로 렌더링됩니다 -->
+        <!-- 상단 배너 광고 -->
+        <div class="ad-banner ad-banner-top" id="topAdBanner">
+            광고 영역 (320x50)
         </div>
-    </div>
 
-    <!-- 마이페이지 -->
-    <div id="mypage" class="page">
-        <div class="stats-card">
-            <div class="stats-header">
-                <div class="level-title">나의 어휘력 생태계</div>
-                <div class="level-display" id="userLevel">🌱 씨앗</div>
-                <div class="level-progress" id="treeProgress">
-                    30점 = 나무 1그루 심기 🌳<br>
-                    🌱씨앗(0) → 🌿새싹(30) → 🪴묘목(150) → 🌳나무(300) → 🏞️동산(900) → ⛰️산(1.5K) → 🏔️큰산(3K) → 🌲숲(5K) → 🌳울창한숲(10K)
+        <!-- 홈 페이지 -->
+        <div id="home" class="page active">
+            <h2 class="page-title">급수를 선택하세요</h2>
+            <div class="level-grid" id="levelGrid">
+                <!-- 동적으로 렌더링됩니다 -->
+            </div>
+        </div>
+
+        <!-- 마이페이지 -->
+        <div id="mypage" class="page">
+            <!-- 레벨 카드 -->
+            <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 16px; padding: 28px 24px; margin: 0 20px 20px; color: white;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px;">
+                    <div>
+                        <div style="font-size: 13px; opacity: 0.8; margin-bottom: 4px;">현재 레벨</div>
+                        <div id="userLevel" style="font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">🌱 씨앗</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 13px; opacity: 0.8; margin-bottom: 4px;">총 점수</div>
+                        <div id="totalScore" style="font-size: 28px; font-weight: 700;">0</div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; backdrop-filter: blur(10px);">
+                        <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px;">학습 진도</div>
+                        <div id="totalTrees" style="font-size: 24px; font-weight: 700;">0</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); border-radius: 12px; padding: 16px; backdrop-filter: blur(10px);">
+                        <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px;">정답률</div>
+                        <div id="correctRate" style="font-size: 24px; font-weight: 700;">0%</div>
+                    </div>
                 </div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-value" id="totalTrees">0</span>
-                    <div class="stat-label">심은 나무</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="correctRate">0%</span>
-                    <div class="stat-label">정답률</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="totalScore">0</span>
-                    <div class="stat-label">총 점수</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="section">
-            <div class="section-header">
-                <span>❌</span>
-                <h3>자주 틀린 한자 Top 30</h3>
-            </div>
-            <div class="wrong-words-list" id="wrongWordsList">
-                <div class="empty-state">
-                    <div class="empty-icon">📚</div>
-                    <div>아직 틀린 한자가 없어요!</div>
-                    <div style="font-size: 14px; margin-top: 8px;">퀴즈를 시작해보세요</div>
+            <!-- Top 30 -->
+            <div style="margin: 0 20px 20px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                    <h3 style="font-size: 16px; font-weight: 600; margin: 0;">자주 틀린 한자</h3>
+                    <button class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;" onclick="reviewTop30()" id="top30ReviewBtn" disabled>
+                        복습하기
+                    </button>
+                </div>
+                <div class="wrong-words-list" id="wrongWordsList" style="background: var(--surface); border-radius: 12px; padding: 16px;">
+                    <div style="text-align: center; padding: 32px 20px; color: var(--text-muted);">
+                        <div style="font-size: 40px; opacity: 0.3; margin-bottom: 8px;">📚</div>
+                        <div style="font-size: 14px;">아직 틀린 한자가 없어요</div>
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-primary" style="margin-top: 16px;" onclick="reviewTop30()" id="top30ReviewBtn" disabled>
-                Top 30 한자 복습하기
-            </button>
-        </div>
-    </div>
 
-    <!-- 퀴즈 페이지 -->
-    <div id="quiz" class="page">
-        <div id="quizHeader" style="padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--border);"></div>
-        
-        <!-- 퀴즈 영역 -->
-        <div id="quizMainArea" style="padding: 16px 20px;">
-            <div id="questionText"></div>
-            <div id="feedbackContainer" style="margin-top: 16px;"></div>
-            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display: none; margin-top: 16px;">
-                다음 문제
-            </button>
-        </div>
-
-        <!-- 결과 영역 (처음엔 숨김) -->
-        <div id="quizResultArea" style="display: none; padding: 16px 20px;"></div>
-    </div>
-</div>
-
-<!-- 하단 고정 배너 광고 -->
-<div class="ad-banner ad-banner-bottom" id="bottomAdBanner">
-    📢 광고 영역 (320x50) - AdMob/AdFit 연동
-</div>
-
-<!-- 설정 패널 -->
-<div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
-<div class="settings-panel" id="settingsPanel">
-    <div class="settings-header">
-        <h2 class="settings-title">⚙️ 설정</h2>
-        <button class="close-settings" onclick="closeSettings()">✕</button>
-    </div>
-    <div class="settings-content">
-        <!-- 마스터 코드 -->
-        <div class="settings-section">
-            <div class="section-title">🔑 마스터 코드</div>
-            <div class="input-group">
-                <label class="input-label">개발/테스트용 코드 입력</label>
-                <input 
-                    type="text" 
-                    class="text-input" 
-                    id="masterCodeInput" 
-                    placeholder="코드 입력"
-                    maxlength="12"
-                    onkeypress="if(event.key==='Enter') checkMasterCode()"
-                >
-            </div>
-            <button class="btn btn-primary" onclick="checkMasterCode()">
-                코드 확인
-            </button>
-        </div>
-
-        <!-- 프리미엄 상태 -->
-        <div class="settings-section">
-            <div class="section-title">💎 프리미엄 상태</div>
-            <div class="status-badge" id="premiumBadge">
-                <span>🔒</span>
-                <span>무료 사용자</span>
-            </div>
-            <button class="btn btn-secondary" style="margin-top: 16px;" onclick="resetPremium()" id="resetBtn">
-                프리미엄 초기화
-            </button>
-        </div>
-
-        <!-- 데이터 관리 -->
-        <div class="settings-section">
-            <div class="section-title">📊 데이터 관리</div>
-            <button class="btn btn-secondary" onclick="resetStats()">
-                통계 초기화
-            </button>
-            <button class="btn btn-secondary" style="margin-top: 12px;" onclick="toggleAdsTest()">
-                광고 표시 테스트
-            </button>
-        </div>
-
-        <!-- 앱 정보 -->
-        <div class="settings-section">
-            <div class="section-title">ℹ️ 앱 정보</div>
-            <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
-                <div><strong>한자나무 (HanjaNamu)</strong></div>
-                <div>버전 1.0.0</div>
-                <div style="margin-top: 12px;">
-                    한 글자씩 쌓아 올리는<br>
-                    어휘력의 숲 🌳
+            <!-- 레벨 가이드 -->
+            <div style="margin: 0 20px 20px;">
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">레벨 가이드</h3>
+                <div style="background: var(--surface); border-radius: 12px; padding: 20px;">
+                    <div style="display: grid; gap: 12px; font-size: 13px; color: var(--text-secondary);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🌱 씨앗</span>
+                            <span style="color: var(--text-muted);">0점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🌿 새싹</span>
+                            <span style="color: var(--text-muted);">30점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🪴 묘목</span>
+                            <span style="color: var(--text-muted);">150점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🌳 나무</span>
+                            <span style="color: var(--text-muted);">300점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🏞️ 동산</span>
+                            <span style="color: var(--text-muted);">900점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>⛰️ 산</span>
+                            <span style="color: var(--text-muted);">1,500점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🏔️ 큰산</span>
+                            <span style="color: var(--text-muted);">3,000점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+                            <span>🌲 숲</span>
+                            <span style="color: var(--text-muted);">5,000점</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>🌳 울창한숲</span>
+                            <span style="color: var(--text-muted);">10,000점</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Paywall -->
-<div class="paywall" id="paywall">
-    <div class="paywall-card">
-        <div class="paywall-icon">🔒</div>
-        <h2 class="paywall-title">프리미엄으로 업그레이드</h2>
-        <p class="paywall-desc">
-            3급부터 6급까지 모든 급수를 학습하고<br>
-            1,667자의 한자를 추가로 마스터하세요!
-        </p>
-        
-        <div class="feature-list">
-            <div class="feature-item">
-                <div class="feature-icon">✨</div>
-                <div class="feature-text">6급부터 3급까지 모든 한자 (1,667자 추가)</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">📚</div>
-                <div class="feature-text">실전 활용 단어 2개씩 제공</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🚫</div>
-                <div class="feature-text">모든 광고 제거 - 쾌적한 학습</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">📊</div>
-                <div class="feature-text">프리미엄 학습 통계</div>
-            </div>
-        </div>
-
-        <div class="price-options">
-            <div class="price-card" onclick="subscribe('monthly')">
-                <div class="price-amount">₩3,900</div>
-                <div class="price-period">월 구독</div>
-            </div>
-            <div class="price-card" onclick="subscribe('yearly')">
-                <div class="price-amount">₩39,000</div>
-                <div class="price-period">연 구독</div>
-                <div class="price-badge">17% 할인!</div>
-            </div>
-        </div>
-
-        <div class="paywall-actions">
-            <button class="btn btn-secondary" onclick="closePaywall()">
-                나중에 하기
-            </button>
-            <button class="link-button" onclick="restorePurchases()">
-                구매 복원
-            </button>
-        </div>
-    </div>
-</div>
-
-<script>
-    // 샘플 데이터 (8급 50자)
-    const sampleData = {
-        8: [],
-        7: [],
-        6: [],
-        5: [],
-        4: [],
-        3: []
-    };
-
-    // GitHub에서 JSON 로드
-    const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/GraceOlive5/hanjanamu/refs/heads/main/';
-    
-    async function loadLevelData(level) {
-        try {
-            const url = `${GITHUB_BASE_URL}level${level}.json`;
-            console.log(`📂 로딩: ${url}`);
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        <!-- 퀴즈 페이지 -->
+        <div id="quiz" class="page">
+            <div id="quizHeader" style="padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--border);"></div>
             
-            const data = await response.json();
-            sampleData[level] = data;
-            console.log(`✅ ${level}급 데이터 로드 완료 (${data.length}자)`);
-            return data;
-        } catch (error) {
-            console.error(`❌ ${level}급 데이터 로드 실패:`, error);
-            return [];
-        }
-    }
+            <!-- 퀴즈 영역 -->
+            <div id="quizMainArea" style="padding: 16px 20px;">
+                <div id="questionText"></div>
+                <div id="feedbackContainer" style="margin-top: 16px;"></div>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display: none; margin-top: 16px;">
+                    다음 문제
+                </button>
+            </div>
 
-    // 앱 시작 시 모든 데이터 로드
-    async function preloadAllData() {
-        console.log('📂 데이터 로딩 시작...');
-        const levels = [8, 7, 6, 5, 4, 3];
-        await Promise.all(levels.map(level => loadLevelData(level)));
-        console.log('✅ 모든 데이터 로드 완료!');
-    }
+            <!-- 결과 영역 (처음엔 숨김) -->
+            <div id="quizResultArea" style="display: none; padding: 16px 20px;"></div>
+        </div>
+    </div>
 
-    // 앱 상태
-    let isPremium = false;
-    let currentLevel = null;
-    let currentQuiz = null;
-    let currentQuestion = 0;
-    let score = 0;
-    let selectedChoice = null;
-    let levelProgress = {}; // 각 급수별 학습 진행도
-    let stats = {
-        totalQuizzes: 0,
-        totalCorrect: 0,
-        totalQuestions: 0,
-        level: '🥉 Bronze',
-        wrongWords: {}
-    };
+    <!-- 하단 고정 배너 광고 -->
+    <div class="ad-banner ad-banner-bottom" id="bottomAdBanner">
+        광고 영역 (320x50)
+    </div>
 
-    // 마스터 코드
-    const MASTER_CODES = ['HANJA2025', 'PREMIUM', 'TESTMODE', 'GRACE', 'DIAMOND'];
-    const STORAGE_KEYS = {
-        STATS: 'hanjaNamuStats',
-        PREMIUM: 'hanjaNamuPremium',
-        PROGRESS: 'hanjaNamuProgress'
-    };
+    <!-- 설정 패널 -->
+    <div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2 class="settings-title">⚙️ 설정</h2>
+            <button class="close-settings" onclick="closeSettings()">✕</button>
+        </div>
+        <div class="settings-content">
+            <!-- 마스터 코드 -->
+            <div class="settings-section">
+                <div class="section-title">🔑 마스터 코드</div>
+                <div class="input-group">
+                    <label class="input-label">개발/테스트용 코드 입력</label>
+                    <input 
+                        type="text" 
+                        class="text-input" 
+                        id="masterCodeInput" 
+                        placeholder="코드 입력"
+                        maxlength="12"
+                        onkeypress="if(event.key==='Enter') checkMasterCode()"
+                    >
+                </div>
+                <button class="btn btn-primary" onclick="checkMasterCode()">
+                    코드 확인
+                </button>
+            </div>
 
-    // 초기화
-    function init() {
-        // 강제로 무료 모드 시작 (테스트용)
-        localStorage.removeItem(STORAGE_KEYS.PREMIUM);
-        isPremium = false;
+            <!-- 프리미엄 상태 -->
+            <div class="settings-section">
+                <div class="section-title">💎 프리미엄 상태</div>
+                <div class="status-badge" id="premiumBadge">
+                    <span>🔒</span>
+                    <span>무료 사용자</span>
+                </div>
+                <button class="btn btn-secondary" style="margin-top: 16px;" onclick="resetPremium()" id="resetBtn">
+                    프리미엄 초기화
+                </button>
+            </div>
+
+            <!-- 데이터 관리 -->
+            <div class="settings-section">
+                <div class="section-title">📊 데이터 관리</div>
+                <button class="btn btn-secondary" onclick="resetStats()">
+                    통계 초기화
+                </button>
+                <button class="btn btn-secondary" style="margin-top: 12px;" onclick="toggleAdsTest()">
+                    광고 표시 테스트
+                </button>
+            </div>
+
+            <!-- 앱 정보 -->
+            <div class="settings-section">
+                <div class="section-title">ℹ️ 앱 정보</div>
+                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+                    <div><strong>한자나무 (HanjaNamu)</strong></div>
+                    <div>버전 1.0.0</div>
+                    <div style="margin-top: 12px;">
+                        한 글자씩 쌓아 올리는<br>
+                        어휘력의 숲 🌳
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paywall -->
+    <div class="paywall" id="paywall">
+        <div class="paywall-card">
+            <div class="paywall-icon">🔒</div>
+            <h2 class="paywall-title">프리미엄으로 업그레이드</h2>
+            <p class="paywall-desc">
+                3급부터 6급까지 모든 급수를 학습하고<br>
+                1,667자의 한자를 추가로 마스터하세요!
+            </p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">✨</div>
+                    <div class="feature-text">6급부터 3급까지 모든 한자 (1,667자 추가)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-text">실전 활용 단어 2개씩 제공</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🚫</div>
+                    <div class="feature-text">모든 광고 제거 - 쾌적한 학습</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-text">프리미엄 학습 통계</div>
+                </div>
+            </div>
+
+            <div class="price-options">
+                <div class="price-card" onclick="subscribe('monthly')">
+                    <div class="price-amount">₩3,900</div>
+                    <div class="price-period">월 구독</div>
+                </div>
+                <div class="price-card" onclick="subscribe('yearly')">
+                    <div class="price-amount">₩39,000</div>
+                    <div class="price-period">연 구독</div>
+                    <div class="price-badge">17% 할인!</div>
+                </div>
+            </div>
+
+            <div class="paywall-actions">
+                <button class="btn btn-secondary" onclick="closePaywall()">
+                    나중에 하기
+                </button>
+                <button class="link-button" onclick="restorePurchases()">
+                    구매 복원
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 샘플 데이터 (8급 50자)
+        const sampleData = {
+            8: [],
+            7: [],
+            6: [],
+            5: [],
+            4: [],
+            3: []
+        };
+
+        // GitHub에서 JSON 로드
+        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/GraceOlive5/hanjanamu/refs/heads/main/';
         
-        loadStats();
-        loadProgress();
-        updateMyPage();
-        updatePremiumUI();
-        renderLevelCards(); // 급수 카드 렌더링
-        
-        // 광고 강제 표시
-        setTimeout(() => {
-            showAds();
-        }, 100);
-        
-        // JSON 데이터 로드
-        preloadAllData();
-    }
-
-    function loadStats() {
-        const saved = localStorage.getItem(STORAGE_KEYS.STATS);
-        if (saved) stats = JSON.parse(saved);
-    }
-
-    function saveStats() {
-        localStorage.setItem(STORAGE_KEYS.STATS, JSON.stringify(stats));
-    }
-
-    function loadProgress() {
-        const saved = localStorage.getItem(STORAGE_KEYS.PROGRESS);
-        if (saved) {
-            levelProgress = JSON.parse(saved);
-        } else {
-            // 초기화
-            levelProgress = {
-                3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0
-            };
-        }
-    }
-
-    function saveProgress() {
-        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(levelProgress));
-    }
-
-    function resetProgress(level) {
-        levelProgress[level] = 0;
-        saveProgress();
-    }
-
-    function loadPremiumStatus() {
-        // 테스트용: 기본값을 무료로 설정
-        const saved = localStorage.getItem(STORAGE_KEYS.PREMIUM);
-        isPremium = saved === 'true';
-        
-        // 광고 표시 상태 업데이트
-        if (isPremium) {
-            hideAds();
-        } else {
-            showAds();
-        }
-    }
-
-    function savePremiumStatus() {
-        localStorage.setItem(STORAGE_KEYS.PREMIUM, isPremium.toString());
-    }
-
-    // 페이지 전환
-    function showPage(pageName) {
-        console.log('🔄 페이지 전환 시작:', pageName);
-        
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
-        
-        if (pageName === 'quiz') {
-            const quizPage = document.getElementById('quiz');
-            if (quizPage) {
-                quizPage.classList.add('active');
-                console.log('✅ 퀴즈 페이지 활성화됨');
-            } else {
-                console.error('❌ 퀴즈 페이지 없음!');
+        async function loadLevelData(level) {
+            try {
+                const url = `${GITHUB_BASE_URL}level${level}.json`;
+                console.log(`📂 로딩: ${url}`);
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                sampleData[level] = data;
+                console.log(`✅ ${level}급 데이터 로드 완료 (${data.length}자)`);
+                return data;
+            } catch (error) {
+                console.error(`❌ ${level}급 데이터 로드 실패:`, error);
+                return [];
             }
-        } else if (pageName === 'home') {
-            document.getElementById('home').classList.add('active');
-            document.querySelectorAll('.header-tab')[0].classList.add('active');
-        } else if (pageName === 'mypage') {
-            document.getElementById('mypage').classList.add('active');
-            document.querySelectorAll('.header-tab')[1].classList.add('active');
-            updateMyPage();
         }
-    }
 
-    // 설정 패널
-    function openSettings() {
-        document.getElementById('settingsPanel').classList.add('open');
-        document.getElementById('settingsOverlay').classList.add('show');
-    }
-
-    function closeSettings() {
-        document.getElementById('settingsPanel').classList.remove('open');
-        document.getElementById('settingsOverlay').classList.remove('show');
-    }
-
-    // 마스터 코드
-    function checkMasterCode() {
-        const input = document.getElementById('masterCodeInput').value.toUpperCase().trim();
-        
-        if (MASTER_CODES.includes(input)) {
-            isPremium = true;
-            savePremiumStatus();
-            updatePremiumUI();
-            alert(`✅ 마스터 코드 인증 완료!\n모든 급수를 사용할 수 있습니다.\n\n사용된 코드: ${input}`);
-            document.getElementById('masterCodeInput').value = '';
-        } else {
-            alert(`❌ 잘못된 코드입니다.\n\n유효한 코드:\n${MASTER_CODES.join('\n')}`);
+        // 앱 시작 시 모든 데이터 로드
+        async function preloadAllData() {
+            console.log('📂 데이터 로딩 시작...');
+            const levels = [8, 7, 6, 5, 4, 3];
+            await Promise.all(levels.map(level => loadLevelData(level)));
+            console.log('✅ 모든 데이터 로드 완료!');
         }
-    }
 
-    function updatePremiumUI() {
-        const badge = document.getElementById('premiumBadge');
-        
-        if (isPremium) {
-            badge.innerHTML = '<span>💎</span><span>프리미엄 활성화</span>';
-            badge.classList.add('premium');
-            
-            // 프리미엄: 광고 숨기기
-            hideAds();
-        } else {
-            badge.innerHTML = '<span>🔒</span><span>무료 사용자</span>';
-            badge.classList.remove('premium');
-            
-            // 무료: 광고 보이기
-            showAds();
-        }
-        
-        // 급수 카드 다시 렌더링 (자물쇠 업데이트)
-        renderLevelCards();
-    }
-
-    function hideAds() {
-        const topAd = document.getElementById('topAdBanner');
-        const bottomAd = document.getElementById('bottomAdBanner');
-        if (topAd) topAd.style.display = 'none';
-        if (bottomAd) bottomAd.style.display = 'none';
-    }
-
-    function showAds() {
-        const topAd = document.getElementById('topAdBanner');
-        const bottomAd = document.getElementById('bottomAdBanner');
-        if (topAd) topAd.style.display = 'flex';
-        if (bottomAd) bottomAd.style.display = 'flex';
-    }
-
-    function toggleAdsTest() {
-        const topAd = document.getElementById('topAdBanner');
-        if (topAd && topAd.style.display === 'none') {
-            showAds();
-            alert('✅ 광고가 표시됩니다.\n(무료 사용자 모드)');
-        } else {
-            hideAds();
-            alert('🚫 광고가 숨겨집니다.\n(프리미엄 사용자 모드)');
-        }
-    }
-
-    function resetPremium() {
-        isPremium = false;
-        localStorage.removeItem(STORAGE_KEYS.PREMIUM);
-        updatePremiumUI();
-        alert('✅ 프리미엄이 초기화되었습니다.\n광고가 표시됩니다.');
-    }
-
-    function resetStats() {
-        stats = {
+        // 앱 상태
+        let isPremium = false;
+        let currentLevel = null;
+        let currentQuiz = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedChoice = null;
+        let levelProgress = {}; // 각 급수별 학습 진행도
+        let stats = {
             totalQuizzes: 0,
             totalCorrect: 0,
             totalQuestions: 0,
             level: '🥉 Bronze',
             wrongWords: {}
         };
-        localStorage.removeItem(STORAGE_KEYS.STATS);
-        updateMyPage();
-        alert('✅ 통계가 초기화되었습니다.');
-    }
 
-    // Paywall
-    function showPaywall(level) {
-        if (isPremium) {
-            startQuiz(level);
-            return;
-        }
-        document.getElementById('paywall').classList.add('show');
-    }
+        // 마스터 코드
+        const MASTER_CODES = ['HANJA2025', 'PREMIUM', 'TESTMODE', 'GRACE', 'DIAMOND'];
+        const STORAGE_KEYS = {
+            STATS: 'hanjaNamuStats',
+            PREMIUM: 'hanjaNamuPremium',
+            PROGRESS: 'hanjaNamuProgress'
+        };
 
-    function renderLevelCards() {
-        const levels = [
-            { level: 3, chars: 817, premium: true },
-            { level: 4, chars: 500, premium: true },
-            { level: 5, chars: 200, premium: true },
-            { level: 6, chars: 150, premium: true },
-            { level: 7, chars: 110, premium: false },
-            { level: 8, chars: 50, premium: false }
-        ];
-
-        const grid = document.getElementById('levelGrid');
-        grid.innerHTML = levels.map(({ level, chars, premium }) => {
-            const isLocked = premium && !isPremium;
-            const clickHandler = isLocked ? `showPaywall(${level})` : `startQuiz(${level})`;
+        // 초기화
+        function init() {
+            // 강제로 무료 모드 시작 (테스트용)
+            localStorage.removeItem(STORAGE_KEYS.PREMIUM);
+            isPremium = false;
             
-            return `
-                <div class="level-card ${isLocked ? 'locked' : ''}" onclick="${clickHandler}">
-                    ${isLocked ? '<div class="level-lock">🔒</div>' : ''}
-                    <div class="level-badge ${premium ? 'premium' : ''}">${premium ? (isPremium ? '💎 PRO' : 'PRO') : '무료'}</div>
-                    <div class="level-number">${level}급</div>
-                    <div class="level-info">${chars}자 ${level === 3 ? '누적' : ''}</div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function closePaywall() {
-        document.getElementById('paywall').classList.remove('show');
-    }
-
-    function subscribe(type) {
-        alert(`${type === 'monthly' ? '월' : '연'} 구독이 완료되었습니다! (시뮬레이션)\n실제 앱에서는 App Store 결제가 진행됩니다.`);
-        isPremium = true;
-        savePremiumStatus();
-        updatePremiumUI();
-        closePaywall();
-    }
-
-    function restorePurchases() {
-        alert('구매 복원 기능 (시뮬레이션)\n실제 앱에서는 App Store Receipt를 확인합니다.');
-    }
-
-    // 퀴즈 시작
-    function startQuiz(level) {
-        console.log('startQuiz called:', level);
-        currentLevel = level;
-        const data = sampleData[level];
-        
-        if (!data || data.length === 0) {
-            alert(`${level}급 데이터를 로딩 중입니다.\n잠시 후 다시 시도해주세요.`);
-            console.log('데이터 없음. 현재 sampleData:', sampleData);
-            return;
+            loadStats();
+            loadProgress();
+            updateMyPage();
+            updatePremiumUI();
+            renderLevelCards(); // 급수 카드 렌더링
+            
+            // 광고 강제 표시
+            setTimeout(() => {
+                showAds();
+            }, 100);
+            
+            // JSON 데이터 로드
+            preloadAllData();
         }
 
-        // 현재 진행도 가져오기
-        const startIndex = levelProgress[level] || 0;
-        const totalChars = data.length;
-        
-        console.log('Progress:', startIndex, '/', totalChars);
-        
-        // 10문제 선택 (순환)
-        let endIndex = startIndex + 10;
-        let quizData = [];
-        
-        if (endIndex <= totalChars) {
-            // 정상 범위
-            quizData = data.slice(startIndex, endIndex);
-        } else {
-            // 끝에 도달 → 처음부터 다시 + 나머지
-            const remaining = totalChars - startIndex;
-            quizData = [...data.slice(startIndex, totalChars), ...data.slice(0, 10 - remaining)];
-            levelProgress[level] = 10 - remaining; // 다음 시작점
+        function loadStats() {
+            const saved = localStorage.getItem(STORAGE_KEYS.STATS);
+            if (saved) stats = JSON.parse(saved);
         }
-        
-        // 진행도 업데이트
-        if (endIndex < totalChars) {
-            levelProgress[level] = endIndex;
-        } else if (endIndex === totalChars) {
-            levelProgress[level] = 0; // 완료 후 처음으로
+
+        function saveStats() {
+            localStorage.setItem(STORAGE_KEYS.STATS, JSON.stringify(stats));
         }
-        
-        saveProgress();
-        
-        currentQuiz = quizData;
-        currentQuestion = 0;
-        score = 0;
-        
-        console.log('Switching to quiz page, quiz data:', quizData.length, '문제');
-        showPage('quiz');
-        
-        // DOM 업데이트 완료 대기
-        requestAnimationFrame(() => {
+
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEYS.PROGRESS);
+            if (saved) {
+                levelProgress = JSON.parse(saved);
+            } else {
+                // 초기화
+                levelProgress = {
+                    3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0
+                };
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(levelProgress));
+        }
+
+        function resetProgress(level) {
+            levelProgress[level] = 0;
+            saveProgress();
+        }
+
+        function loadPremiumStatus() {
+            // 테스트용: 기본값을 무료로 설정
+            const saved = localStorage.getItem(STORAGE_KEYS.PREMIUM);
+            isPremium = saved === 'true';
+            
+            // 광고 표시 상태 업데이트
+            if (isPremium) {
+                hideAds();
+            } else {
+                showAds();
+            }
+        }
+
+        function savePremiumStatus() {
+            localStorage.setItem(STORAGE_KEYS.PREMIUM, isPremium.toString());
+        }
+
+        // 페이지 전환
+        function showPage(pageName) {
+            console.log('🔄 페이지 전환 시작:', pageName);
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
+            
+            if (pageName === 'quiz') {
+                const quizPage = document.getElementById('quiz');
+                if (quizPage) {
+                    quizPage.classList.add('active');
+                    console.log('✅ 퀴즈 페이지 활성화됨');
+                } else {
+                    console.error('❌ 퀴즈 페이지 없음!');
+                }
+            } else if (pageName === 'home') {
+                document.getElementById('home').classList.add('active');
+                document.querySelectorAll('.header-tab')[0].classList.add('active');
+            } else if (pageName === 'mypage') {
+                document.getElementById('mypage').classList.add('active');
+                document.querySelectorAll('.header-tab')[1].classList.add('active');
+                updateMyPage();
+            }
+        }
+
+        // 설정 패널
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('open');
+            document.getElementById('settingsOverlay').classList.add('show');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('open');
+            document.getElementById('settingsOverlay').classList.remove('show');
+        }
+
+        // 마스터 코드
+        function checkMasterCode() {
+            const input = document.getElementById('masterCodeInput').value.toUpperCase().trim();
+            
+            if (MASTER_CODES.includes(input)) {
+                isPremium = true;
+                savePremiumStatus();
+                updatePremiumUI();
+                alert(`✅ 마스터 코드 인증 완료!\n모든 급수를 사용할 수 있습니다.\n\n사용된 코드: ${input}`);
+                document.getElementById('masterCodeInput').value = '';
+            } else {
+                alert(`❌ 잘못된 코드입니다.\n\n유효한 코드:\n${MASTER_CODES.join('\n')}`);
+            }
+        }
+
+        function updatePremiumUI() {
+            const badge = document.getElementById('premiumBadge');
+            
+            if (isPremium) {
+                badge.innerHTML = '<span>💎</span><span>프리미엄 활성화</span>';
+                badge.classList.add('premium');
+                
+                // 프리미엄: 광고 숨기기
+                hideAds();
+            } else {
+                badge.innerHTML = '<span>🔒</span><span>무료 사용자</span>';
+                badge.classList.remove('premium');
+                
+                // 무료: 광고 보이기
+                showAds();
+            }
+            
+            // 급수 카드 다시 렌더링 (자물쇠 업데이트)
+            renderLevelCards();
+        }
+
+        function hideAds() {
+            const topAd = document.getElementById('topAdBanner');
+            const bottomAd = document.getElementById('bottomAdBanner');
+            if (topAd) topAd.style.display = 'none';
+            if (bottomAd) bottomAd.style.display = 'none';
+        }
+
+        function showAds() {
+            const topAd = document.getElementById('topAdBanner');
+            const bottomAd = document.getElementById('bottomAdBanner');
+            if (topAd) topAd.style.display = 'flex';
+            if (bottomAd) bottomAd.style.display = 'flex';
+        }
+
+        function toggleAdsTest() {
+            const topAd = document.getElementById('topAdBanner');
+            if (topAd && topAd.style.display === 'none') {
+                showAds();
+                alert('✅ 광고가 표시됩니다.\n(무료 사용자 모드)');
+            } else {
+                hideAds();
+                alert('🚫 광고가 숨겨집니다.\n(프리미엄 사용자 모드)');
+            }
+        }
+
+        function resetPremium() {
+            isPremium = false;
+            localStorage.removeItem(STORAGE_KEYS.PREMIUM);
+            updatePremiumUI();
+            alert('✅ 프리미엄이 초기화되었습니다.\n광고가 표시됩니다.');
+        }
+
+        function resetStats() {
+            stats = {
+                totalQuizzes: 0,
+                totalCorrect: 0,
+                totalQuestions: 0,
+                level: '🥉 Bronze',
+                wrongWords: {}
+            };
+            localStorage.removeItem(STORAGE_KEYS.STATS);
+            updateMyPage();
+            alert('✅ 통계가 초기화되었습니다.');
+        }
+
+        // Paywall
+        function showPaywall(level) {
+            if (isPremium) {
+                startQuiz(level);
+                return;
+            }
+            document.getElementById('paywall').classList.add('show');
+        }
+
+        function renderLevelCards() {
+            const levels = [
+                { level: 3, chars: 817, premium: true },
+                { level: 4, chars: 500, premium: true },
+                { level: 5, chars: 200, premium: true },
+                { level: 6, chars: 150, premium: true },
+                { level: 7, chars: 110, premium: false },
+                { level: 8, chars: 50, premium: false }
+            ];
+
+            const grid = document.getElementById('levelGrid');
+            grid.innerHTML = levels.map(({ level, chars, premium }) => {
+                const isLocked = premium && !isPremium;
+                const clickHandler = isLocked ? `showPaywall(${level})` : `startQuiz(${level})`;
+                
+                return `
+                    <div class="level-card ${isLocked ? 'locked' : ''}" onclick="${clickHandler}">
+                        ${isLocked ? '<div class="level-lock">🔒</div>' : ''}
+                        <div class="level-badge ${premium ? 'premium' : ''}">${premium ? (isPremium ? '💎 PRO' : 'PRO') : '무료'}</div>
+                        <div class="level-number">${level}급</div>
+                        <div class="level-info">${chars}자 ${level === 3 ? '누적' : ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function closePaywall() {
+            document.getElementById('paywall').classList.remove('show');
+        }
+
+        function subscribe(type) {
+            alert(`${type === 'monthly' ? '월' : '연'} 구독이 완료되었습니다! (시뮬레이션)\n실제 앱에서는 App Store 결제가 진행됩니다.`);
+            isPremium = true;
+            savePremiumStatus();
+            updatePremiumUI();
+            closePaywall();
+        }
+
+        function restorePurchases() {
+            alert('구매 복원 기능 (시뮬레이션)\n실제 앱에서는 App Store Receipt를 확인합니다.');
+        }
+
+        // 퀴즈 시작
+        function startQuiz(level) {
+            console.log('startQuiz called:', level);
+            currentLevel = level;
+            const data = sampleData[level];
+            
+            if (!data || data.length === 0) {
+                alert(`${level}급 데이터를 로딩 중입니다.\n잠시 후 다시 시도해주세요.`);
+                console.log('데이터 없음. 현재 sampleData:', sampleData);
+                return;
+            }
+
+            // 현재 진행도 가져오기
+            const startIndex = levelProgress[level] || 0;
+            const totalChars = data.length;
+            
+            console.log('Progress:', startIndex, '/', totalChars);
+            
+            // 10문제 선택 (순환)
+            let endIndex = startIndex + 10;
+            let quizData = [];
+            
+            if (endIndex <= totalChars) {
+                // 정상 범위
+                quizData = data.slice(startIndex, endIndex);
+            } else {
+                // 끝에 도달 → 처음부터 다시 + 나머지
+                const remaining = totalChars - startIndex;
+                quizData = [...data.slice(startIndex, totalChars), ...data.slice(0, 10 - remaining)];
+                levelProgress[level] = 10 - remaining; // 다음 시작점
+            }
+            
+            // 진행도 업데이트
+            if (endIndex < totalChars) {
+                levelProgress[level] = endIndex;
+            } else if (endIndex === totalChars) {
+                levelProgress[level] = 0; // 완료 후 처음으로
+            }
+            
+            saveProgress();
+            
+            currentQuiz = quizData;
+            currentQuestion = 0;
+            score = 0;
+            
+            console.log('Switching to quiz page, quiz data:', quizData.length, '문제');
+            showPage('quiz');
+            
+            // DOM 업데이트 완료 대기
             requestAnimationFrame(() => {
-                setTimeout(() => {
-                    renderQuestion();
-                }, 100);
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        renderQuestion();
+                    }, 100);
+                });
             });
-        });
-    }
+        }
 
-    function renderQuestion(retryCount = 0) {
-        // 퀴즈 영역 표시, 결과 영역 숨김
-        const quizMainArea = document.getElementById('quizMainArea');
-        const quizResultArea = document.getElementById('quizResultArea');
-        
-        if (quizMainArea) quizMainArea.style.display = 'block';
-        if (quizResultArea) quizResultArea.style.display = 'none';
-        
-        // 요소 존재 확인
-        const quizHeader = document.getElementById('quizHeader');
-        const questionText = document.getElementById('questionText');
-        
-        if (!quizHeader || !questionText) {
-            if (retryCount < 3) {
-                console.log(`⏳ 퀴즈 요소 대기 중... (시도 ${retryCount + 1}/3)`);
-                setTimeout(() => renderQuestion(retryCount + 1), 100);
+        function renderQuestion(retryCount = 0) {
+            // 퀴즈 영역 표시, 결과 영역 숨김
+            const quizMainArea = document.getElementById('quizMainArea');
+            const quizResultArea = document.getElementById('quizResultArea');
+            
+            if (quizMainArea) quizMainArea.style.display = 'block';
+            if (quizResultArea) quizResultArea.style.display = 'none';
+            
+            // 요소 존재 확인
+            const quizHeader = document.getElementById('quizHeader');
+            const questionText = document.getElementById('questionText');
+            
+            if (!quizHeader || !questionText) {
+                if (retryCount < 3) {
+                    console.log(`⏳ 퀴즈 요소 대기 중... (시도 ${retryCount + 1}/3)`);
+                    setTimeout(() => renderQuestion(retryCount + 1), 100);
+                    return;
+                }
+                
+                console.error('❌ 퀴즈 요소를 찾을 수 없습니다!');
+                console.error('quizHeader:', quizHeader);
+                console.error('questionText:', questionText);
+                alert('퀴즈 화면 로딩 실패. 홈으로 돌아갑니다.');
+                goHome();
                 return;
             }
             
-            console.error('❌ 퀴즈 요소를 찾을 수 없습니다!');
-            console.error('quizHeader:', quizHeader);
-            console.error('questionText:', questionText);
-            alert('퀴즈 화면 로딩 실패. 홈으로 돌아갑니다.');
-            goHome();
-            return;
-        }
-        
-        console.log('✅ 퀴즈 요소 확인 완료');
-        
-        const question = currentQuiz[currentQuestion];
-        const progress = ((currentQuestion + 1) / currentQuiz.length) * 100;
-        
-        // 오답 선택지 생성
-        const allData = sampleData[currentLevel];
-        const wrongChoices = allData
-            .filter(q => q.char !== question.char)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 2);
-        
-        const choices = [question, ...wrongChoices]
-            .sort(() => Math.random() - 0.5);
-        
-        selectedChoice = null;
-        
-        quizHeader.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 14px; font-weight: 500;">${currentLevel}급 퀴즈</span>
-                <span style="font-size: 14px; color: var(--text-secondary);">${currentQuestion + 1} / ${currentQuiz.length}</span>
-            </div>
-            <div style="background: var(--border); height: 6px; border-radius: 3px; overflow: hidden;">
-                <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); height: 100%; width: ${progress}%; transition: width 0.3s;"></div>
-            </div>
-        `;
-        
-        // 박스 없이 한자 + 선택지 가로 3개 (공간 최적화)
-        questionText.innerHTML = `
-            <div style="text-align: center;">
-                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">다음 한자의 음과 뜻은?</div>
-                <div style="font-size: 90px; font-weight: 700; font-family: var(--font-display); color: var(--primary); margin: 16px 0; line-height: 1;">${question.char}</div>
-                
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
-                    ${choices.map((choice, index) => `
-                        <div class="quiz-choice" onclick="selectChoice(${index}, '${choice.char}', '${question.char}')">
-                            <div class="choice-text">
-                                <div class="choice-meaning">${choice.meaning}</div>
-                                <div class="choice-sound">${choice.sound}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-        
-        const feedbackContainer = document.getElementById('feedbackContainer');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        if (feedbackContainer) feedbackContainer.innerHTML = '';
-        if (nextBtn) nextBtn.style.display = 'none';
-        
-        console.log('✅ 퀴즈 렌더링 완료');
-    }
-
-    function selectChoice(index, selectedChar, correctChar) {
-        if (selectedChoice !== null) return;
-        
-        selectedChoice = {
-            index: index,
-            isCorrect: selectedChar === correctChar
-        };
-        
-        const choices = document.querySelectorAll('.quiz-choice');
-        const question = currentQuiz[currentQuestion];
-        
-        choices.forEach((choice, i) => {
-            choice.style.pointerEvents = 'none';
+            console.log('✅ 퀴즈 요소 확인 완료');
             
-            if (i === index) {
-                if (selectedChoice.isCorrect) {
-                    choice.classList.add('correct');
-                    score++;
-                    stats.totalCorrect++;
-                    
-                    let feedback = `
-                        <div style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--success);">
-                            <div style="font-size: 15px; font-weight: 600; color: var(--success); margin-bottom: 4px;">✅ 정답입니다!</div>
-                    `;
-                    
-                    // 프리미엄 단어 표시
-                    if (isPremium && question.words && question.words.length > 0) {
-                        feedback += `
-                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(39, 174, 96, 0.2);">
-                                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">💎 활용 단어</div>
-                                ${question.words.map(w => `<div style="font-size: 13px; color: var(--text-primary); margin: 2px 0;">${w}</div>`).join('')}
-                            </div>
-                        `;
-                    }
-                    
-                    feedback += `</div>`;
-                    document.getElementById('feedbackContainer').innerHTML = feedback;
-                } else {
-                    choice.classList.add('incorrect');
-                    
-                    if (!stats.wrongWords[question.char]) {
-                        stats.wrongWords[question.char] = {
-                            count: 0,
-                            meaning: question.meaning,
-                            sound: question.sound
-                        };
-                    }
-                    stats.wrongWords[question.char].count++;
-                    
-                    document.getElementById('feedbackContainer').innerHTML = `
-                        <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--error);">
-                            <div style="font-size: 15px; font-weight: 600; color: var(--error); margin-bottom: 3px;">❌ 틀렸어요</div>
-                            <div style="font-size: 12px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
-                        </div>
-                    `;
-                }
-            }
+            const question = currentQuiz[currentQuestion];
+            const progress = ((currentQuestion + 1) / currentQuiz.length) * 100;
             
-            // 정답 표시
-            const choiceText = choice.querySelector('.choice-text div').textContent;
-            if (choiceText === question.meaning) {
-                choice.classList.add('correct-answer');
-            }
-        });
-        
-        stats.totalQuestions++;
-        saveStats();
-        document.getElementById('nextBtn').style.display = 'block';
-    }
-
-    function nextQuestion() {
-        currentQuestion++;
-        
-        if (currentQuestion < currentQuiz.length) {
-            renderQuestion();
-        } else {
-            showResult();
-        }
-    }
-
-    function showResult() {
-        stats.totalQuizzes++;
-        saveStats();
-        
-        const percentage = Math.round((score / currentQuiz.length) * 100);
-        const newLevel = calculateLevel();
-        const totalChars = (sampleData[currentLevel] && sampleData[currentLevel].length) || 0;
-        const progress = levelProgress[currentLevel] || 0;
-        
-        // 퀴즈 영역 숨기고 결과 영역 표시
-        document.getElementById('quizMainArea').style.display = 'none';
-        document.getElementById('quizResultArea').style.display = 'block';
-        
-        document.getElementById('quizResultArea').innerHTML = `
-            <div style="text-align: center; padding: 48px 20px;">
-                <div style="font-size: 72px; margin-bottom: 24px;">
-                    ${percentage >= 80 ? '🎉' : percentage >= 60 ? '👍' : '💪'}
+            // 오답 선택지 생성
+            const allData = sampleData[currentLevel];
+            const wrongChoices = allData
+                .filter(q => q.char !== question.char)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 2);
+            
+            const choices = [question, ...wrongChoices]
+                .sort(() => Math.random() - 0.5);
+            
+            selectedChoice = null;
+            
+            quizHeader.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 14px; font-weight: 500;">${currentLevel}급 퀴즈</span>
+                    <span style="font-size: 14px; color: var(--text-secondary);">${currentQuestion + 1} / ${currentQuiz.length}</span>
                 </div>
-                <div style="font-size: 28px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);">
-                    퀴즈 완료!
-                </div>
-                <div style="font-size: 16px; color: var(--text-secondary); margin-bottom: 8px;">
-                    ${score} / ${currentQuiz.length} 정답
-                </div>
-                ${totalChars > 0 ? `
-                <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 32px;">
-                    ${currentLevel}급 진행도: ${progress}/${totalChars} 학습 완료
-                </div>
-                ` : ''}
-                
-                <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 32px; border-radius: 20px; margin-bottom: 24px;">
-                    <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">현재 레벨</div>
-                    <div style="font-size: 36px; font-weight: 700; font-family: var(--font-display);">${newLevel}</div>
-                    <div style="font-size: 14px; opacity: 0.8; margin-top: 8px;">총 ${stats.totalCorrect}점</div>
-                </div>
-                
-                <!-- 결과 화면 광고 -->
-                <div class="ad-banner ad-banner-result" style="margin: 32px auto;">
-                    📢 광고 영역 (300x250)<br>
-                    AdMob/AdFit 중형 배너
-                </div>
-                
-                <div style="display: flex; gap: 12px; margin-top: 24px;">
-                    <button class="btn btn-secondary" style="flex: 1;" onclick="handleGoHome()">홈으로</button>
-                    <button class="btn btn-secondary" style="flex: 1;" onclick="handleRestartLevel()">새 게임</button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleContinueQuiz()">이어하기</button>
-                </div>
-            </div>
-        `;
-    }
-
-    function handleGoHome() {
-        console.log('홈으로 버튼 클릭');
-        goHome();
-    }
-
-    function handleRestartLevel() {
-        console.log('새 게임 버튼 클릭, currentLevel:', currentLevel);
-        if (currentLevel) {
-            restartLevel(currentLevel);
-        } else {
-            alert('급수 정보가 없습니다. 홈으로 이동합니다.');
-            goHome();
-        }
-    }
-
-    function handleContinueQuiz() {
-        console.log('이어하기 버튼 클릭, currentLevel:', currentLevel);
-        if (currentLevel) {
-            startQuiz(currentLevel);
-        } else {
-            alert('급수 정보가 없습니다. 홈으로 이동합니다.');
-            goHome();
-        }
-    }
-
-    function restartLevel(level) {
-        console.log('restartLevel called:', level);
-        resetProgress(level);
-        startQuiz(level);
-    }
-
-    function goHome() {
-        showPage('home');
-    }
-
-    // 마이페이지
-    function calculateLevel() {
-        const score = stats.totalCorrect;
-        const trees = Math.floor(score / 30); // 30점 = 나무 1그루
-        
-        if (score >= 10000) return `🌳 울창한 숲`;
-        if (score >= 5000) return `🌲 숲`;
-        if (score >= 3000) return `🏔️ 큰 산`;
-        if (score >= 1500) return `⛰️ 산`;
-        if (score >= 900) return `🏞️ 동산`;
-        if (score >= 300) return `🌳 나무`;
-        if (score >= 150) return `🪴 묘목`;
-        if (score >= 30) return `🌿 새싹`;
-        return '🌱 씨앗';
-    }
-    
-    function getTreeCount() {
-        return Math.floor(stats.totalCorrect / 30);
-    }
-
-    function getNextLevelInfo() {
-        const score = stats.totalCorrect;
-        if (score >= 10000) return { next: '최고 레벨!', required: 10000, trees: Math.floor(score / 30) };
-        if (score >= 5000) return { next: '🌲 울창한 숲', required: 10000, trees: Math.floor(score / 30) };
-        if (score >= 3000) return { next: '🌳 숲', required: 5000, trees: Math.floor(score / 30) };
-        if (score >= 1500) return { next: '🏔️ 큰 산', required: 3000, trees: Math.floor(score / 30) };
-        if (score >= 900) return { next: '⛰️ 산', required: 1500, trees: Math.floor(score / 30) };
-        if (score >= 300) return { next: '🏞️ 동산', required: 900, trees: Math.floor(score / 30) };
-        if (score >= 150) return { next: '🌳 나무', required: 300, trees: Math.floor(score / 30) };
-        if (score >= 30) return { next: '🪴 묘목', required: 150, trees: Math.floor(score / 30) };
-        return { next: '🌿 새싹', required: 30, trees: 0 };
-    }
-
-    function calculateCorrectRate() {
-        if (stats.totalQuestions === 0) return 0;
-        return Math.round((stats.totalCorrect / stats.totalQuestions) * 100);
-    }
-
-    function updateMyPage() {
-        stats.level = calculateLevel();
-        
-        document.getElementById('userLevel').textContent = stats.level;
-        document.getElementById('totalTrees').textContent = getTreeCount() + '그루';
-        document.getElementById('correctRate').textContent = calculateCorrectRate() + '%';
-        document.getElementById('totalScore').textContent = stats.totalCorrect;
-        
-        updateWrongWordsList();
-    }
-
-    function updateWrongWordsList() {
-        const container = document.getElementById('wrongWordsList');
-        const btn = document.getElementById('top30ReviewBtn');
-        
-        const sortedWords = Object.entries(stats.wrongWords)
-            .sort((a, b) => b[1].count - a[1].count)
-            .slice(0, 30);
-        
-        if (sortedWords.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-icon">📚</div>
-                    <div>아직 틀린 한자가 없어요!</div>
-                    <div style="font-size: 14px; margin-top: 8px;">퀴즈를 시작해보세요</div>
+                <div style="background: var(--border); height: 6px; border-radius: 3px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); height: 100%; width: ${progress}%; transition: width 0.3s;"></div>
                 </div>
             `;
-            btn.disabled = true;
-        } else {
-            container.innerHTML = sortedWords.map(([char, data]) => `
-                <div class="wrong-word-item">
-                    <div class="wrong-word-char">${char}</div>
-                    <div class="wrong-word-info">
-                        <div class="wrong-word-meaning">${data.meaning} ${data.sound}</div>
-                    </div>
-                    <div class="wrong-count">${data.count}번</div>
-                </div>
-            `).join('');
-            btn.disabled = false;
-        }
-    }
-
-    function reviewTop30() {
-        const wrongWords = Object.entries(stats.wrongWords)
-            .sort((a, b) => b[1].count - a[1].count)
-            .slice(0, 30);
-        
-        if (wrongWords.length === 0) {
-            alert('아직 틀린 한자가 없어요!');
-            return;
-        }
-        
-        // 틀린 한자들을 퀴즈 데이터 형식으로 변환
-        const reviewQuestions = wrongWords.map(([char, data]) => ({
-            char: char,
-            sound: data.sound,
-            meaning: data.meaning,
-            words: data.words || [] // 활용 단어가 있으면 포함
-        }));
-        
-        // 복습 모드로 퀴즈 시작
-        currentLevel = '복습';
-        currentQuiz = reviewQuestions;
-        currentQuestion = 0;
-        score = 0;
-        
-        showPage('quiz');
-        renderReviewQuestion();
-    }
-
-    function renderReviewQuestion() {
-        const question = currentQuiz[currentQuestion];
-        const progress = ((currentQuestion + 1) / currentQuiz.length) * 100;
-        
-        // 오답 선택지 생성 (8급 데이터에서)
-        const allData = sampleData[8] || [];
-        const wrongChoices = allData
-            .filter(q => q.char !== question.char)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 2);
-        
-        const choices = [question, ...wrongChoices]
-            .sort(() => Math.random() - 0.5);
-        
-        selectedChoice = null;
-        
-        document.getElementById('quizHeader').innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 14px; font-weight: 500;">❌ Top 30 복습</span>
-                <span style="font-size: 14px; color: var(--text-secondary);">${currentQuestion + 1} / ${currentQuiz.length}</span>
-            </div>
-            <div style="background: var(--border); height: 6px; border-radius: 3px; overflow: hidden;">
-                <div style="background: linear-gradient(90deg, var(--error), var(--warning)); height: 100%; width: ${progress}%; transition: width 0.3s;"></div>
-            </div>
-        `;
-        
-        document.getElementById('questionText').innerHTML = `
-            <div style="text-align: center;">
-                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">다음 한자의 음과 뜻은?</div>
-                <div style="font-size: 100px; font-weight: 700; font-family: var(--font-display); color: var(--error); margin: 20px 0; line-height: 1;">${question.char}</div>
-                
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px;">
-                    ${choices.map((choice, index) => `
-                        <div class="quiz-choice" onclick="selectReviewChoice(${index}, '${choice.char}', '${question.char}')">
-                            <div class="choice-text">
-                                <div class="choice-meaning">${choice.meaning}</div>
-                                <div class="choice-sound">${choice.sound}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('feedbackContainer').innerHTML = '';
-        document.getElementById('nextBtn').style.display = 'none';
-    }
-
-    function selectReviewChoice(index, selectedChar, correctChar) {
-        if (selectedChoice !== null) return;
-        
-        selectedChoice = {
-            index: index,
-            isCorrect: selectedChar === correctChar
-        };
-        
-        const choices = document.querySelectorAll('.quiz-choice');
-        const question = currentQuiz[currentQuestion];
-        
-        choices.forEach((choice, i) => {
-            choice.style.pointerEvents = 'none';
             
-            if (i === index) {
-                if (selectedChoice.isCorrect) {
-                    choice.classList.add('correct');
-                    score++;
-                    stats.totalCorrect++;
+            // 박스 없이 한자 + 선택지 가로 3개 (공간 최적화)
+            questionText.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">다음 한자의 음과 뜻은?</div>
+                    <div style="font-size: 90px; font-weight: 700; font-family: var(--font-display); color: var(--primary); margin: 16px 0; line-height: 1;">${question.char}</div>
                     
-                    let feedback = `
-                        <div style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); padding: 16px; border-radius: 12px; border-left: 4px solid var(--success);">
-                            <div style="font-size: 16px; font-weight: 600; color: var(--success); margin-bottom: 6px;">✅ 정답입니다!</div>
-                    `;
-                    
-                    if (isPremium && question.words && question.words.length > 0) {
-                        feedback += `
-                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(39, 174, 96, 0.2);">
-                                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">💎 활용 단어</div>
-                                ${question.words.map(w => `<div style="font-size: 14px; color: var(--text-primary); margin: 3px 0;">${w}</div>`).join('')}
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
+                        ${choices.map((choice, index) => `
+                            <div class="quiz-choice" onclick="selectChoice(${index}, '${choice.char}', '${question.char}')">
+                                <div class="choice-text">
+                                    <div class="choice-meaning">${choice.meaning}</div>
+                                    <div class="choice-sound">${choice.sound}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (feedbackContainer) feedbackContainer.innerHTML = '';
+            if (nextBtn) nextBtn.style.display = 'none';
+            
+            console.log('✅ 퀴즈 렌더링 완료');
+        }
+
+        function selectChoice(index, selectedChar, correctChar) {
+            if (selectedChoice !== null) return;
+            
+            selectedChoice = {
+                index: index,
+                isCorrect: selectedChar === correctChar
+            };
+            
+            const choices = document.querySelectorAll('.quiz-choice');
+            const question = currentQuiz[currentQuestion];
+            
+            choices.forEach((choice, i) => {
+                choice.style.pointerEvents = 'none';
+                
+                if (i === index) {
+                    if (selectedChoice.isCorrect) {
+                        choice.classList.add('correct');
+                        score++;
+                        stats.totalCorrect++;
+                        
+                        let feedback = `
+                            <div style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--success);">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--success); margin-bottom: 4px;">✅ 정답입니다!</div>
+                        `;
+                        
+                        // 프리미엄 단어 표시
+                        if (isPremium && question.words && question.words.length > 0) {
+                            feedback += `
+                                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(39, 174, 96, 0.2);">
+                                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">💎 활용 단어</div>
+                                    ${question.words.map(w => `<div style="font-size: 13px; color: var(--text-primary); margin: 2px 0;">${w}</div>`).join('')}
+                                </div>
+                            `;
+                        }
+                        
+                        feedback += `</div>`;
+                        document.getElementById('feedbackContainer').innerHTML = feedback;
+                    } else {
+                        choice.classList.add('incorrect');
+                        
+                        if (!stats.wrongWords[question.char]) {
+                            stats.wrongWords[question.char] = {
+                                count: 0,
+                                meaning: question.meaning,
+                                sound: question.sound
+                            };
+                        }
+                        stats.wrongWords[question.char].count++;
+                        
+                        document.getElementById('feedbackContainer').innerHTML = `
+                            <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--error);">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--error); margin-bottom: 3px;">❌ 틀렸어요</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
                             </div>
                         `;
                     }
-                    
-                    feedback += `</div>`;
-                    document.getElementById('feedbackContainer').innerHTML = feedback;
-                } else {
-                    choice.classList.add('incorrect');
-                    
-                    // 복습에서도 틀리면 카운트 증가
-                    stats.wrongWords[question.char].count++;
-                    
-                    document.getElementById('feedbackContainer').innerHTML = `
-                        <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--error);">
-                            <div style="font-size: 15px; font-weight: 600; color: var(--error); margin-bottom: 3px;">❌ 틀렸어요</div>
-                            <div style="font-size: 12px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
-                        </div>
-                    `;
                 }
+                
+                // 정답 표시
+                const choiceText = choice.querySelector('.choice-text div').textContent;
+                if (choiceText === question.meaning) {
+                    choice.classList.add('correct-answer');
+                }
+            });
+            
+            stats.totalQuestions++;
+            saveStats();
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < currentQuiz.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            stats.totalQuizzes++;
+            saveStats();
+            
+            const percentage = Math.round((score / currentQuiz.length) * 100);
+            const newLevel = calculateLevel();
+            const totalChars = (sampleData[currentLevel] && sampleData[currentLevel].length) || 0;
+            const progress = levelProgress[currentLevel] || 0;
+            
+            // 퀴즈 영역 숨기고 결과 영역 표시
+            document.getElementById('quizMainArea').style.display = 'none';
+            document.getElementById('quizResultArea').style.display = 'block';
+            
+            document.getElementById('quizResultArea').innerHTML = `
+                <div style="text-align: center; padding: 20px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 16px;">
+                        ${percentage >= 80 ? '🎉' : percentage >= 60 ? '👍' : '💪'}
+                    </div>
+                    <div style="font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary);">
+                        퀴즈 완료!
+                    </div>
+                    <div style="font-size: 15px; color: var(--text-secondary); margin-bottom: 6px;">
+                        ${score} / ${currentQuiz.length} 정답
+                    </div>
+                    ${totalChars > 0 ? `
+                    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                        ${currentLevel}급 진행도: ${progress}/${totalChars} 학습 완료
+                    </div>
+                    ` : ''}
+                    
+                    <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 20px; border-radius: 16px; margin-bottom: 16px;">
+                        <div style="font-size: 12px; opacity: 0.9; margin-bottom: 6px;">현재 레벨</div>
+                        <div style="font-size: 28px; font-weight: 700; font-family: var(--font-display);">${newLevel}</div>
+                        <div style="font-size: 12px; opacity: 0.8; margin-top: 6px;">총 ${stats.totalCorrect}점</div>
+                    </div>
+                    
+                    <!-- 결과 화면 광고 -->
+                    <div class="ad-banner ad-banner-result" style="margin: 16px auto;">
+                        광고 영역 (300x250)
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px; margin-top: 16px;">
+                        <button class="btn btn-secondary" style="flex: 1; padding: 14px 12px; font-size: 14px;" onclick="handleGoHome()">홈으로</button>
+                        <button class="btn btn-secondary" style="flex: 1; padding: 14px 12px; font-size: 14px;" onclick="handleRestartLevel()">처음부터</button>
+                        <button class="btn btn-primary" style="flex: 1; padding: 14px 12px; font-size: 14px;" onclick="handleContinueQuiz()">다음한자</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleGoHome() {
+            console.log('홈으로 버튼 클릭');
+            goHome();
+        }
+
+        function handleRestartLevel() {
+            console.log('새 게임 버튼 클릭, currentLevel:', currentLevel);
+            if (currentLevel) {
+                restartLevel(currentLevel);
+            } else {
+                alert('급수 정보가 없습니다. 홈으로 이동합니다.');
+                goHome();
+            }
+        }
+
+        function handleContinueQuiz() {
+            console.log('이어하기 버튼 클릭, currentLevel:', currentLevel);
+            if (currentLevel) {
+                startQuiz(currentLevel);
+            } else {
+                alert('급수 정보가 없습니다. 홈으로 이동합니다.');
+                goHome();
+            }
+        }
+
+        function restartLevel(level) {
+            console.log('restartLevel called:', level);
+            resetProgress(level);
+            startQuiz(level);
+        }
+
+        function goHome() {
+            showPage('home');
+        }
+
+        // 마이페이지
+        function calculateLevel() {
+            const score = stats.totalCorrect;
+            const trees = Math.floor(score / 30); // 30점 = 나무 1그루
+            
+            if (score >= 10000) return `🌳 울창한 숲`;
+            if (score >= 5000) return `🌲 숲`;
+            if (score >= 3000) return `🏔️ 큰 산`;
+            if (score >= 1500) return `⛰️ 산`;
+            if (score >= 900) return `🏞️ 동산`;
+            if (score >= 300) return `🌳 나무`;
+            if (score >= 150) return `🪴 묘목`;
+            if (score >= 30) return `🌿 새싹`;
+            return '🌱 씨앗';
+        }
+        
+        function getTreeCount() {
+            return Math.floor(stats.totalCorrect / 30);
+        }
+
+        function getNextLevelInfo() {
+            const score = stats.totalCorrect;
+            if (score >= 10000) return { next: '최고 레벨!', required: 10000, trees: Math.floor(score / 30) };
+            if (score >= 5000) return { next: '🌲 울창한 숲', required: 10000, trees: Math.floor(score / 30) };
+            if (score >= 3000) return { next: '🌳 숲', required: 5000, trees: Math.floor(score / 30) };
+            if (score >= 1500) return { next: '🏔️ 큰 산', required: 3000, trees: Math.floor(score / 30) };
+            if (score >= 900) return { next: '⛰️ 산', required: 1500, trees: Math.floor(score / 30) };
+            if (score >= 300) return { next: '🏞️ 동산', required: 900, trees: Math.floor(score / 30) };
+            if (score >= 150) return { next: '🌳 나무', required: 300, trees: Math.floor(score / 30) };
+            if (score >= 30) return { next: '🪴 묘목', required: 150, trees: Math.floor(score / 30) };
+            return { next: '🌿 새싹', required: 30, trees: 0 };
+        }
+
+        function calculateCorrectRate() {
+            if (stats.totalQuestions === 0) return 0;
+            return Math.round((stats.totalCorrect / stats.totalQuestions) * 100);
+        }
+
+        function updateMyPage() {
+            stats.level = calculateLevel();
+            
+            document.getElementById('userLevel').textContent = stats.level;
+            document.getElementById('totalTrees').textContent = getTreeCount() + '그루';
+            document.getElementById('correctRate').textContent = calculateCorrectRate() + '%';
+            document.getElementById('totalScore').textContent = stats.totalCorrect;
+            
+            updateWrongWordsList();
+        }
+
+        function updateWrongWordsList() {
+            const container = document.getElementById('wrongWordsList');
+            const btn = document.getElementById('top30ReviewBtn');
+            
+            const sortedWords = Object.entries(stats.wrongWords)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 30);
+            
+            if (sortedWords.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📚</div>
+                        <div>아직 틀린 한자가 없어요!</div>
+                        <div style="font-size: 14px; margin-top: 8px;">퀴즈를 시작해보세요</div>
+                    </div>
+                `;
+                btn.disabled = true;
+            } else {
+                container.innerHTML = sortedWords.map(([char, data]) => `
+                    <div class="wrong-word-item">
+                        <div class="wrong-word-char">${char}</div>
+                        <div class="wrong-word-info">
+                            <div class="wrong-word-meaning">${data.meaning} ${data.sound}</div>
+                        </div>
+                        <div class="wrong-count">${data.count}번</div>
+                    </div>
+                `).join('');
+                btn.disabled = false;
+            }
+        }
+
+        function reviewTop30() {
+            const wrongWords = Object.entries(stats.wrongWords)
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 30);
+            
+            if (wrongWords.length === 0) {
+                alert('아직 틀린 한자가 없어요!');
+                return;
             }
             
-            const choiceText = choice.querySelector('.choice-text div').textContent;
-            if (choiceText === question.meaning) {
-                choice.classList.add('correct-answer');
-            }
-        });
-        
-        stats.totalQuestions++;
-        saveStats();
-        document.getElementById('nextBtn').style.display = 'block';
-        
-        // 복습에서는 다음 버튼 텍스트 변경
-        if (currentQuestion + 1 < currentQuiz.length) {
-            document.getElementById('nextBtn').textContent = '다음 문제';
-        } else {
-            document.getElementById('nextBtn').textContent = '결과 보기';
+            // 틀린 한자들을 퀴즈 데이터 형식으로 변환
+            const reviewQuestions = wrongWords.map(([char, data]) => ({
+                char: char,
+                sound: data.sound,
+                meaning: data.meaning,
+                words: data.words || [] // 활용 단어가 있으면 포함
+            }));
+            
+            // 복습 모드로 퀴즈 시작
+            currentLevel = '복습';
+            currentQuiz = reviewQuestions;
+            currentQuestion = 0;
+            score = 0;
+            
+            showPage('quiz');
+            renderReviewQuestion();
         }
-    }
 
-    function nextQuestion() {
-        currentQuestion++;
-        
-        if (currentQuestion < currentQuiz.length) {
-            if (currentLevel === '복습') {
-                renderReviewQuestion();
+        function renderReviewQuestion() {
+            const question = currentQuiz[currentQuestion];
+            const progress = ((currentQuestion + 1) / currentQuiz.length) * 100;
+            
+            // 오답 선택지 생성 (8급 데이터에서)
+            const allData = sampleData[8] || [];
+            const wrongChoices = allData
+                .filter(q => q.char !== question.char)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 2);
+            
+            const choices = [question, ...wrongChoices]
+                .sort(() => Math.random() - 0.5);
+            
+            selectedChoice = null;
+            
+            document.getElementById('quizHeader').innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 14px; font-weight: 500;">❌ Top 30 복습</span>
+                    <span style="font-size: 14px; color: var(--text-secondary);">${currentQuestion + 1} / ${currentQuiz.length}</span>
+                </div>
+                <div style="background: var(--border); height: 6px; border-radius: 3px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, var(--error), var(--warning)); height: 100%; width: ${progress}%; transition: width 0.3s;"></div>
+                </div>
+            `;
+            
+            document.getElementById('questionText').innerHTML = `
+                <div style="text-align: center;">
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">다음 한자의 음과 뜻은?</div>
+                    <div style="font-size: 100px; font-weight: 700; font-family: var(--font-display); color: var(--error); margin: 20px 0; line-height: 1;">${question.char}</div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px;">
+                        ${choices.map((choice, index) => `
+                            <div class="quiz-choice" onclick="selectReviewChoice(${index}, '${choice.char}', '${question.char}')">
+                                <div class="choice-text">
+                                    <div class="choice-meaning">${choice.meaning}</div>
+                                    <div class="choice-sound">${choice.sound}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('feedbackContainer').innerHTML = '';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function selectReviewChoice(index, selectedChar, correctChar) {
+            if (selectedChoice !== null) return;
+            
+            selectedChoice = {
+                index: index,
+                isCorrect: selectedChar === correctChar
+            };
+            
+            const choices = document.querySelectorAll('.quiz-choice');
+            const question = currentQuiz[currentQuestion];
+            
+            choices.forEach((choice, i) => {
+                choice.style.pointerEvents = 'none';
+                
+                if (i === index) {
+                    if (selectedChoice.isCorrect) {
+                        choice.classList.add('correct');
+                        score++;
+                        stats.totalCorrect++;
+                        
+                        let feedback = `
+                            <div style="background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05)); padding: 16px; border-radius: 12px; border-left: 4px solid var(--success);">
+                                <div style="font-size: 16px; font-weight: 600; color: var(--success); margin-bottom: 6px;">✅ 정답입니다!</div>
+                        `;
+                        
+                        if (isPremium && question.words && question.words.length > 0) {
+                            feedback += `
+                                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(39, 174, 96, 0.2);">
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">💎 활용 단어</div>
+                                    ${question.words.map(w => `<div style="font-size: 14px; color: var(--text-primary); margin: 3px 0;">${w}</div>`).join('')}
+                                </div>
+                            `;
+                        }
+                        
+                        feedback += `</div>`;
+                        document.getElementById('feedbackContainer').innerHTML = feedback;
+                    } else {
+                        choice.classList.add('incorrect');
+                        
+                        // 복습에서도 틀리면 카운트 증가
+                        stats.wrongWords[question.char].count++;
+                        
+                        document.getElementById('feedbackContainer').innerHTML = `
+                            <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05)); padding: 12px; border-radius: 12px; border-left: 4px solid var(--error);">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--error); margin-bottom: 3px;">❌ 틀렸어요</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">정답: ${question.meaning} (${question.sound})</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                const choiceText = choice.querySelector('.choice-text div').textContent;
+                if (choiceText === question.meaning) {
+                    choice.classList.add('correct-answer');
+                }
+            });
+            
+            stats.totalQuestions++;
+            saveStats();
+            document.getElementById('nextBtn').style.display = 'block';
+            
+            // 복습에서는 다음 버튼 텍스트 변경
+            if (currentQuestion + 1 < currentQuiz.length) {
+                document.getElementById('nextBtn').textContent = '다음 문제';
             } else {
-                renderQuestion();
+                document.getElementById('nextBtn').textContent = '결과 보기';
             }
-        } else {
-            showResult();
         }
-    }
 
-    // 앱 시작
-    init();
-</script>
-```
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < currentQuiz.length) {
+                if (currentLevel === '복습') {
+                    renderReviewQuestion();
+                } else {
+                    renderQuestion();
+                }
+            } else {
+                showResult();
+            }
+        }
 
+        // 앱 시작
+        init();
+    </script>
 </body>
 </html>
