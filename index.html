@@ -1122,20 +1122,34 @@
         };
 
         // GitHub에서 JSON 로드
-        const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/graceolive5/hanjanamu/main/';
+        const GITHUB_URLS = [
+            'https://raw.githubusercontent.com/graceolive5/hanjanamu/main/',
+            'https://raw.githubusercontent.com/graceolive5/hanja-namu/main/',
+            'https://raw.githubusercontent.com/graceolive5/hanjanamu/master/',
+            'https://graceolive5.github.io/hanjanamu/',
+            'https://graceolive5.github.io/hanja-namu/'
+        ];
         
         async function loadLevelData(level) {
-            try {
-                const response = await fetch(`${GITHUB_BASE_URL}level${level}.json`);
-                if (!response.ok) throw new Error('Failed to load');
-                const data = await response.json();
-                sampleData[level] = data;
-                console.log(`✅ ${level}급 데이터 로드 완료:`, data.length, '자');
-                return data;
-            } catch (error) {
-                console.error(`❌ ${level}급 데이터 로드 실패:`, error);
-                return [];
+            for (const baseUrl of GITHUB_URLS) {
+                try {
+                    const url = `${baseUrl}level${level}.json`;
+                    console.log(`시도 중: ${url}`);
+                    const response = await fetch(url);
+                    if (!response.ok) continue;
+                    
+                    const data = await response.json();
+                    sampleData[level] = data;
+                    console.log(`✅ ${level}급 데이터 로드 완료 (${data.length}자) - URL: ${baseUrl}`);
+                    return data;
+                } catch (error) {
+                    console.log(`실패: ${baseUrl}level${level}.json`);
+                    continue;
+                }
             }
+            
+            console.error(`❌ ${level}급 데이터 로드 실패 - 모든 URL 시도함`);
+            return [];
         }
 
         // 앱 시작 시 모든 데이터 로드
@@ -1240,11 +1254,19 @@
 
         // 페이지 전환
         function showPage(pageName) {
+            console.log('🔄 페이지 전환 시작:', pageName);
+            
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.header-tab').forEach(t => t.classList.remove('active'));
             
             if (pageName === 'quiz') {
-                document.getElementById('quiz').classList.add('active');
+                const quizPage = document.getElementById('quiz');
+                if (quizPage) {
+                    quizPage.classList.add('active');
+                    console.log('✅ 퀴즈 페이지 활성화됨');
+                } else {
+                    console.error('❌ 퀴즈 페이지 없음!');
+                }
             } else if (pageName === 'home') {
                 document.getElementById('home').classList.add('active');
                 document.querySelectorAll('.header-tab')[0].classList.add('active');
@@ -1458,8 +1480,12 @@
             const questionText = document.getElementById('questionText');
             
             if (!quizHeader || !questionText) {
-                console.error('퀴즈 요소를 찾을 수 없습니다. 다시 시도합니다...');
-                setTimeout(() => renderQuestion(), 200);
+                console.error('❌ 퀴즈 요소를 찾을 수 없습니다!');
+                console.error('quizHeader:', quizHeader);
+                console.error('questionText:', questionText);
+                console.error('현재 활성 페이지:', document.querySelector('.page.active'));
+                alert('퀴즈 화면 로딩 실패. 홈으로 돌아갑니다.');
+                goHome();
                 return;
             }
             
@@ -1507,8 +1533,13 @@
                 </div>
             `;
             
-            document.getElementById('feedbackContainer').innerHTML = '';
-            document.getElementById('nextBtn').style.display = 'none';
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (feedbackContainer) feedbackContainer.innerHTML = '';
+            if (nextBtn) nextBtn.style.display = 'none';
+            
+            console.log('✅ 퀴즈 렌더링 완료');
         }
 
         function selectChoice(index, selectedChar, correctChar) {
