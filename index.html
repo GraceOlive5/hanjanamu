@@ -1446,13 +1446,23 @@
             console.log('Switching to quiz page, quiz data:', quizData.length, '문제');
             showPage('quiz');
             
-            // 약간의 딜레이 후 렌더링
+            // 페이지 전환 완료 대기 후 렌더링
             setTimeout(() => {
                 renderQuestion();
-            }, 100);
+            }, 200);
         }
 
         function renderQuestion() {
+            // 요소 존재 확인
+            const quizHeader = document.getElementById('quizHeader');
+            const questionText = document.getElementById('questionText');
+            
+            if (!quizHeader || !questionText) {
+                console.error('퀴즈 요소를 찾을 수 없습니다. 다시 시도합니다...');
+                setTimeout(() => renderQuestion(), 200);
+                return;
+            }
+            
             const question = currentQuiz[currentQuestion];
             const progress = ((currentQuestion + 1) / currentQuiz.length) * 100;
             
@@ -1468,7 +1478,7 @@
             
             selectedChoice = null;
             
-            document.getElementById('quizHeader').innerHTML = `
+            quizHeader.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <span style="font-size: 14px; font-weight: 500;">${currentLevel}급 퀴즈</span>
                     <span style="font-size: 14px; color: var(--text-secondary);">${currentQuestion + 1} / ${currentQuiz.length}</span>
@@ -1479,7 +1489,7 @@
             `;
             
             // 박스 없이 한자 + 선택지 가로 3개 (공간 최적화)
-            document.getElementById('questionText').innerHTML = `
+            questionText.innerHTML = `
                 <div style="text-align: center;">
                     <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">다음 한자의 음과 뜻은?</div>
                     <div style="font-size: 90px; font-weight: 700; font-family: var(--font-display); color: var(--primary); margin: 16px 0; line-height: 1;">${question.char}</div>
